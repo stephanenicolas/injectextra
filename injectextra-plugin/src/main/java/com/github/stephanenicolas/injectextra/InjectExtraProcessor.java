@@ -2,7 +2,6 @@ package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.IBinder;
 import com.github.stephanenicolas.afterburner.AfterBurner;
 import com.github.stephanenicolas.afterburner.exception.AfterBurnerImpossibleException;
 import java.lang.annotation.Annotation;
@@ -124,40 +123,45 @@ public class InjectExtraProcessor implements IClassTransformer {
       buffer = new StringBuffer();
       String findExtraString = "";
       ClassPool classPool = targetClazz.getClassPool();
+      //please note that default values when reading extras are not used.
       if (isSubClass(classPool, field.getType(), String.class)) {
-        findExtraString = "getIntent().getStringExtra(" + value + ")";
-      } else if (field.getType().subtypeOf(CtClass.booleanType)) {
-        findExtraString = "getIntent().getBooleanExtra(" + value + ", false)";
-      } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
-        findExtraString = "new Boolean(getIntent().getBooleanExtra(" + value + ", false))";
+        findExtraString = "getIntent().getStringExtra(\"" + value + "\")";
       } else if (field.getType().subtypeOf(CtClass.intType)) {
-        findExtraString = "getIntent().getIntExtra(" + value + ", -1)";
+        findExtraString = "getIntent().getIntExtra(\"" + value + "\", -1)";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
-        findExtraString = "new Integer(getIntent().getIntExtra(" + value + ", -1))";
+        findExtraString = "new Integer(getIntent().getIntExtra(\"" + value + "\", -1))";
       } else if (isBoolArray(field)) {
-        findExtraString = "getIntent().getBooleanArrayExtra(" + value + ")";
+        findExtraString = "getIntent().getBooleanArrayExtra(\"" + value + "\")";
       } else if (isByteArray(field)) {
-        findExtraString = "getIntent().getByteArrayExtra(" + value + ")";
+        findExtraString = "getIntent().getByteArrayExtra(\"" + value + "\")";
       } else if (isCharArray(field)) {
-        findExtraString = "getIntent().getCharArrayExtra(" + value + ")";
+        findExtraString = "getIntent().getCharArrayExtra(\"" + value + "\")";
+      } else if (isCharSequenceArray(field, classPool)) {
+        findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
+      } else if (isCharSequenceArrayList(field, classPool)) {
+        findExtraString = "getIntent().getCharSequenceArrayListExtra(\"" + value + "\")";
       } else if (isStringArray(field, classPool)) {
-        findExtraString = "getIntent().getStringArrayExtra(" + value + ")";
+        findExtraString = "getIntent().getStringArrayExtra(\"" + value + "\")";
       } else if (isIntArray(field)) {
-        findExtraString = "getIntent().getIntArrayExtra(" + value + ")";
-      } else if (isSubClass(classPool, field.getType(), IBinder.class)) {
-        findExtraString = "getIntent().getIBinder(" + value + ")";
+        findExtraString = "getIntent().getIntArrayExtra(\"" + value + "\")";
+      } else if (field.getType().subtypeOf(CtClass.booleanType)) {
+        findExtraString = "getIntent().getBooleanExtra(\"" + value + "\", false)";
+      } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
+        findExtraString = "new Boolean(getIntent().getBooleanExtra(\"" + value + "\", false))";
       } else if (isSubClass(classPool, field.getType(), Bundle.class)) {
-        findExtraString = "getIntent().getBundle(" + value + ")";
+        findExtraString = "getIntent().getBundleExtra(\"" + value + "\")";
       } else if (field.getType().subtypeOf(CtClass.byteType)) {
-        findExtraString = "getIntent().getByteExtra(" + value + ", -1)";
+        findExtraString = "getIntent().getByteExtra(\"" + value + "\", -1)";
       } else if (isSubClass(classPool, field.getType(), Byte.class)) {
-        findExtraString = "new Byte(getIntent().getByteExtra(" + value + ", -1))";
+        findExtraString = "new Byte(getIntent().getByteExtra(\"" + value + "\", -1))";
       } else if (field.getType().subtypeOf(CtClass.charType)) {
-        findExtraString = "getIntent().getCharExtra(" + value + ", -1)";
+        findExtraString = "getIntent().getCharExtra(\"" + value + "\", -1)";
       } else if (isSubClass(classPool, field.getType(), Character.class)) {
-        findExtraString = "new Char(getIntent().getCharExtra(" + value + ", -1))";
+        findExtraString = "new Char(getIntent().getCharExtra(\"" + value + "\", -1))";
+      } else if (isSubClass(classPool, field.getType(), CharSequence.class)) {
+        findExtraString = "getIntent().getCharSequenceExtra(\"" + value + "\", -1)";
       } else if (isSubClass(classPool, field.getType(), Object.class)) {
-        findExtraString = "getIntent().get(" + value + ")";
+        findExtraString = "getIntent().get(\"" + value + "\")";
       } else {
         throw new NotFoundException(
             format("InjectExtra doen't know how to inject field %s of type %s in %s",
@@ -208,6 +212,16 @@ public class InjectExtraProcessor implements IClassTransformer {
     return field.getType().isArray() && field.getType()
         .getComponentType()
         .subtypeOf(CtClass.charType);
+  }
+
+  private boolean isCharSequenceArray(CtField field, ClassPool classPool) throws NotFoundException {
+    return field.getType().isArray() && isSubClass(classPool, field.getType().getComponentType(),
+        CharSequence.class);
+  }
+
+  private boolean isCharSequenceArrayList(CtField field, ClassPool classPool) throws NotFoundException {
+    System.out.println("Generic signature of charsequence arraylist");
+    return isSubClass(classPool, field.getType(), ArrayList.class) && field.getType().getGenericSignature().equals("");
   }
 
   private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {
