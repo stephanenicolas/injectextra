@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="native-platform-osx-amd64-0.10">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2650hq37qpph364ivk299q86gl/gradle-1.12/lib/native-platform-osx-amd64-0.10.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

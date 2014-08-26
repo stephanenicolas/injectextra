@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="robolectric-2.4-SNAPSHOT">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/robolectric/robolectric/2.4-SNAPSHOT/robolectric-2.4-SNAPSHOT.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
