@@ -17,10 +17,10 @@ public class MainActivityTest {
 
   @Test
   public void shouldInjectExtra() {
-    Intent intent = new Intent();
+    Intent intent = new Intent(Robolectric.application, SecondActivity.class);
     intent.putExtra(SecondActivity.APP_NAME, "foo");
     SecondActivity activity = Robolectric.buildActivity(SecondActivity.class).withIntent(intent).create().get();
     assertNotNull(activity.getView());
-    assertThat(activity.getView().getText().toString(), is("foo"));
+    assertThat(activity.getView().getText().toString(), is("Injected :foo"));
   }
 }
