@@ -155,11 +155,11 @@ public class InjectExtraProcessor implements IClassTransformer {
       } else if (isSubClass(classPool, field.getType(), Byte.class)) {
         findExtraString = "new Byte(getIntent().getByteExtra(\"" + value + "\", -1))";
       } else if (field.getType().subtypeOf(CtClass.charType)) {
-        findExtraString = "getIntent().getCharExtra(\"" + value + "\", -1)";
+        findExtraString = "getIntent().getCharExtra(\"" + value + "\", '\\u0000')";
       } else if (isSubClass(classPool, field.getType(), Character.class)) {
-        findExtraString = "new Char(getIntent().getCharExtra(\"" + value + "\", -1))";
+        findExtraString = "new Character(getIntent().getCharExtra(\"" + value + "\", '\\u0000'))";
       } else if (isSubClass(classPool, field.getType(), CharSequence.class)) {
-        findExtraString = "getIntent().getCharSequenceExtra(\"" + value + "\", -1)";
+        findExtraString = "getIntent().getCharSequenceExtra(\"" + value + "\")";
       } else if (isSubClass(classPool, field.getType(), Object.class)) {
         findExtraString = "getIntent().get(\"" + value + "\")";
       } else {
