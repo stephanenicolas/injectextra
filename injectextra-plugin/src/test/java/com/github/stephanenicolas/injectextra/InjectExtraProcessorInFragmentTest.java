@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.injectresource;
+package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -6,7 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Movie;
 import android.os.Bundle;
 import android.view.animation.Animation;
-import com.test.injectresource.R;
+import com.test.injectextra.R;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;

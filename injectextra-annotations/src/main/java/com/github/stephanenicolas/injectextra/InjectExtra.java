@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions
  * and limitations under the License.
  */
-package com.github.stephanenicolas.injectresource;
+package com.github.stephanenicolas.injectextra;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,13 +23,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Indicates that a variable member of a class (whether static or not) should be
- * injected with an Android resource.
+ * injected with an Android extra.
  *
- * The value corresponds to the id of the resource.<br />
+ * The value corresponds to the id of the extra.<br />
  *
- * You may specify the name of the resource instead of the id using {@link #name()},
+ * You may specify the name of the extra instead of the id using {@link #name()},
  * which will use {@link android.content.res.Resources#getIdentifier(String, String, String)} to
- * resolve the resource by name.
+ * resolve the extra by name.
  *
  * Usage example:<br />
  * {@code @InjectResource(R.string.hello) protected String hello;} <br/>

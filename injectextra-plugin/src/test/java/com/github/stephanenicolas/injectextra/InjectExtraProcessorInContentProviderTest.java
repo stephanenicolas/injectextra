@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.injectresource;
+package com.github.stephanenicolas.injectextra;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.graphics.Movie;
 import android.net.Uri;
 import android.view.animation.Animation;
-import com.test.injectresource.R;
+import com.test.injectextra.R;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;

@@ -33,7 +33,7 @@ dependencies {
   compile gradleApi()
   compile localGroovy()
 
-  compile project(':injectresource-annotations')
+  compile project(':injectextra-annotations')
 
 
   compile 'org.projectlombok:lombok:1.14.2'
@@ -73,7 +73,7 @@ dependencies {
 
 modifyPom {
   project {
-    name "Injectresource Gradle Plugin"
+    name "Injectextra Gradle Plugin"
     description POM_DESCRIPTION
     url POM_URL
 
@@ -100,7 +100,7 @@ modifyPom {
   }
 }
 
-//process test resources via aapt. Needs ANDROID_HOME to be set
+//process test extras via aapt. Needs ANDROID_HOME to be set
 task('aaptTestResources') {
   def androidHome = System.getenv("ANDROID_HOME")
   def command = "$androidHome/build-tools/19.1.0/aapt "
@@ -113,7 +113,7 @@ task('aaptTestResources') {
     "-M",
     "${project.file('src/test/java/AndroidManifest.xml')}",
     "-S",
-    "${project.file('src/test/resources')}",
+    "${project.file('src/test/extras')}",
     "-m",
     "-J",
     "${project.file('src/test/java/')}"
@@ -124,7 +124,7 @@ task('aaptTestResources') {
   println "stderr: ${process.err.text}"
   println "stdout: ${process.in.text}"
   if (process.exitValue() != 0) {
-    throw new GradleScriptException("Impossible to process test resources", null)
+    throw new GradleScriptException("Impossible to process test extras", null)
   }
 }
 

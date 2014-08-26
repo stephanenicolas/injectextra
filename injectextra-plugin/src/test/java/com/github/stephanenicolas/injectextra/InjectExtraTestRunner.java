@@ -1,6 +1,6 @@
-package com.github.stephanenicolas.injectresource;
+package com.github.stephanenicolas.injectextra;
 
-import com.test.injectresource.R;
+import com.test.injectextra.R;
 import java.io.FileOutputStream;
 import java.net.URL;
 import javassist.ClassPool;
@@ -32,7 +32,7 @@ public class InjectResourceTestRunner extends RobolectricTestRunner {
     return new AsmInstrumentingClassLoader(setup, urls) {
       @Override
       protected byte[] getByteCode(String className) throws ClassNotFoundException {
-        if (className.startsWith("com.github.stephanenicolas.injectresource")) {
+        if (className.startsWith("com.github.stephanenicolas.injectextra")) {
           try {
             CtClass dummyClass = ClassPool.getDefault().get(className);
             if (processor.shouldTransform(dummyClass)) {
@@ -62,7 +62,7 @@ public class InjectResourceTestRunner extends RobolectricTestRunner {
   private static class AndroidManifestExt extends AndroidManifest {
     public AndroidManifestExt() {
       super(Fs.fileFromPath("src/test/java/AndroidManifest.xml"),
-          Fs.fileFromPath("src/test/resources/"));
+          Fs.fileFromPath("src/test/extras/"));
     }
 
     @Override public Class getRClass() {

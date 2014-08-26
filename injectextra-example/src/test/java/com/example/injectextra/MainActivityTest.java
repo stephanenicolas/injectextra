@@ -1,4 +1,4 @@
-package com.example.injectresource;
+package com.example.injectextra;
 
 import org.junit.Before;
 import org.junit.Test;

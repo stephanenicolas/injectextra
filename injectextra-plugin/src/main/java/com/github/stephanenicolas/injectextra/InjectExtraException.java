@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.injectresource;
+package com.github.stephanenicolas.injectextra;
 
 /**
  * An exception that can be thrown by the {@link InjectResourceProcessor}.

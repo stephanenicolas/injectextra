@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2014-08-25T22:57:48" hostname="MacBook-Pro-de-Admin.local" time="0.051">
+<testsuite name="com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2014-08-25T22:57:48" hostname="MacBook-Pro-de-Admin.local" time="0.051">
   <properties/>
-  <testcase name="shouldInjectResource_simple" classname="com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest" time="0.051"/>
-  <system-out><![CDATA[18:57:48.855 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest
+  <testcase name="shouldInjectResource_simple" classname="com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest" time="0.051"/>
+  <system-out><![CDATA[18:57:48.855 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest
 18:57:48.855 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_STRING
 18:57:48.855 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_INTEGER
 18:57:48.855 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_BOOLEAN
@@ -12,9 +12,9 @@
 18:57:48.856 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_ANIMATION
 18:57:48.856 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_COLOR_STATE_LIST
 18:57:48.856 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field TAG
-18:57:48.870 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest$TestActivity
+18:57:48.870 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest$TestActivity
 18:57:48.870 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field view
-18:57:48.872 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest$TestActivity$TestView
+18:57:48.872 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest$TestActivity$TestView
 18:57:48.872 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field string
 18:57:48.872 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field string has annotation InjectResource
 18:57:48.872 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field intA
@@ -36,9 +36,9 @@
 18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field colorStateList
 18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field colorStateList has annotation InjectResource
 18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Class InjectResourceProcessorInViewTest$TestActivity$TestView will get transformed: true
-18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceTestRunner - Intercepting via InjectResource com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest$TestActivity$TestView
+18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceTestRunner - Intercepting via InjectResource com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest$TestActivity$TestView
 18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Analyzing InjectResourceProcessorInViewTest$TestActivity$TestView
-18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest$TestActivity$TestView
+18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest$TestActivity$TestView
 18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field string
 18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field string has annotation InjectResource
 18:57:48.874 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field intA
@@ -60,49 +60,49 @@
 18:57:48.876 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field colorStateList
 18:57:48.876 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field colorStateList has annotation InjectResource
 18:57:48.877 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Preliminary body (before insertion) :android.app.Application application = GET_APPLICATION_TAG;
-android.content.res.Resources resources = application.getResources();
-string = resources.getString(2130903040);
-intA = resources.getInteger(2131165184);
-intB = new Integer(resources.getInteger(2131165184));
-boolA = resources.getBoolean(2130968576);
-boolB = new Boolean(resources.getBoolean(2130968576));
-arrayA = resources.getStringArray(2131230721);
-arrayB = resources.getIntArray(2131230720);
-movie = resources.getMovie(2130837504);
+android.content.res.Resources extras = application.getResources();
+string = extras.getString(2130903040);
+intA = extras.getInteger(2131165184);
+intB = new Integer(extras.getInteger(2131165184));
+boolA = extras.getBoolean(2130968576);
+boolB = new Boolean(extras.getBoolean(2130968576));
+arrayA = extras.getStringArray(2131230721);
+arrayB = extras.getIntArray(2131230720);
+movie = extras.getMovie(2130837504);
 anim = android.view.animation.AnimationUtils.loadAnimation(application, 17432576);
-colorStateList = resources.getColorStateList(2131034113);
+colorStateList = extras.getColorStateList(2131034113);
 
 18:57:48.881 [Test worker] INFO  c.g.s.a.InsertableMethodBuilder - Creating override protected void onFinishInflate() { 
 super.onFinishInflate();
 ==BODY==}
 
-18:57:48.881 [Test worker] INFO  c.g.s.afterburner.AfterBurner - InsertableMethod : [class:com.github.stephanenicolas.injectresource.InjectResourceProcessorInViewTest$TestActivity$TestView,before:null,after:onFinishInflate,fullMethod:protected void onFinishInflate() { 
+18:57:48.881 [Test worker] INFO  c.g.s.afterburner.AfterBurner - InsertableMethod : [class:com.github.stephanenicolas.injectextra.InjectResourceProcessorInViewTest$TestActivity$TestView,before:null,after:onFinishInflate,fullMethod:protected void onFinishInflate() { 
 super.onFinishInflate();
 android.app.Application application = ((android.app.Application) this.getContext().getApplicationContext());
-android.content.res.Resources resources = application.getResources();
-string = resources.getString(2130903040);
-intA = resources.getInteger(2131165184);
-intB = new Integer(resources.getInteger(2131165184));
-boolA = resources.getBoolean(2130968576);
-boolB = new Boolean(resources.getBoolean(2130968576));
-arrayA = resources.getStringArray(2131230721);
-arrayB = resources.getIntArray(2131230720);
-movie = resources.getMovie(2130837504);
+android.content.res.Resources extras = application.getResources();
+string = extras.getString(2130903040);
+intA = extras.getInteger(2131165184);
+intB = new Integer(extras.getInteger(2131165184));
+boolA = extras.getBoolean(2130968576);
+boolB = new Boolean(extras.getBoolean(2130968576));
+arrayA = extras.getStringArray(2131230721);
+arrayB = extras.getIntArray(2131230720);
+movie = extras.getMovie(2130837504);
 anim = android.view.animation.AnimationUtils.loadAnimation(application, 17432576);
-colorStateList = resources.getColorStateList(2131034113);
+colorStateList = extras.getColorStateList(2131034113);
 }
 ,body:android.app.Application application = ((android.app.Application) this.getContext().getApplicationContext());
-android.content.res.Resources resources = application.getResources();
-string = resources.getString(2130903040);
-intA = resources.getInteger(2131165184);
-intB = new Integer(resources.getInteger(2131165184));
-boolA = resources.getBoolean(2130968576);
-boolB = new Boolean(resources.getBoolean(2130968576));
-arrayA = resources.getStringArray(2131230721);
-arrayB = resources.getIntArray(2131230720);
-movie = resources.getMovie(2130837504);
+android.content.res.Resources extras = application.getResources();
+string = extras.getString(2130903040);
+intA = extras.getInteger(2131165184);
+intB = new Integer(extras.getInteger(2131165184));
+boolA = extras.getBoolean(2130968576);
+boolB = new Boolean(extras.getBoolean(2130968576));
+arrayA = extras.getStringArray(2131230721);
+arrayB = extras.getIntArray(2131230720);
+movie = extras.getMovie(2130837504);
 anim = android.view.animation.AnimationUtils.loadAnimation(application, 17432576);
-colorStateList = resources.getColorStateList(2131034113);
+colorStateList = extras.getColorStateList(2131034113);
 ]
 18:57:48.882 [Test worker] INFO  c.g.s.afterburner.AfterBurner - Method : null
 Size of weaved byte code :2562

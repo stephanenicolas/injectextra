@@ -15,7 +15,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:0.12.2'
     classpath 'com.github.stephanenicolas.morpheus:morpheus-plugin:1.0.0'
-    classpath("com.github.stephanenicolas.injectresource:injectresource-plugin:1.0.0-SNAPSHOT")
+    classpath("com.github.stephanenicolas.injectextra:injectextra-plugin:1.0.0-SNAPSHOT")
     //if support is needed add this
     //also see repositories section
     //classpath 'com.android.support:support-v4:19.1.0'
@@ -26,7 +26,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'injectresource'
+apply plugin: 'injectextra'
 
 repositories {
   mavenCentral()
@@ -86,9 +86,9 @@ dependencies {
 
 
 
-//this is needed if you use robolectric and want to use injection of resources in test.
+//this is needed if you use robolectric and want to use injection of extras in test.
 //TODO make it easier
-import com.github.stephanenicolas.injectresource.InjectResourceProcessor;
+import com.github.stephanenicolas.injectextra.InjectResourceProcessor;
 
 gradle.projectsEvaluated {
   //testDebug should trigger transformation of source classes (not tests)

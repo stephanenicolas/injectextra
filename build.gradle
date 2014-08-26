@@ -23,8 +23,8 @@ allprojects {
 
 apply plugin: 'maven'
 apply plugin: 'release'
-createReleaseTag.dependsOn ':injectresource-annotations:uploadArchives',
-    ':injectresource-plugin:uploadArchives'
+createReleaseTag.dependsOn ':injectextra-annotations:uploadArchives',
+    ':injectextra-plugin:uploadArchives'
 
 release {
   failOnSnapshotDependencies = false
@@ -36,18 +36,18 @@ task wrapper(type: Wrapper) {
 
 task cleanExample(type: Exec) {
   executable = '../gradlew'
-  workingDir = project.file('injectresource-example')
+  workingDir = project.file('injectextra-example')
   args = ['clean']
 }
 
 task assembleExample(type: Exec) {
   executable = '../gradlew'
-  workingDir = project.file('injectresource-example')
+  workingDir = project.file('injectextra-example')
   args = ['assemble']
 }
 
 task installExample(type: Exec) {
   executable = '../gradlew'
-  workingDir = project.file('injectresource-example')
+  workingDir = project.file('injectextra-example')
   args = ['installDebug']
 }

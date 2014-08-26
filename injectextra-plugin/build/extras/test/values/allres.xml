@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<extras>
   <string name="string1">test</string>
   <bool name="bool1">true</bool>
   <color name="color1">#555555</color>
@@ -11,4 +11,4 @@
   <string-array name="array1">
     <item>"foo"</item>
   </string-array>
-</resources>
+</extras>

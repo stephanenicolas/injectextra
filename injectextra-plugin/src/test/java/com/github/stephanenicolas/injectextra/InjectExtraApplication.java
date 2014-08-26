@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.injectresource;
+package com.github.stephanenicolas.injectextra;
 
 import android.app.Application;
 import android.content.res.ColorStateList;

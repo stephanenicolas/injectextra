@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.injectresource;
+package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
 import android.app.Application;
@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 import static java.lang.String.format;
 
 /**
- * Will inject all resources in the following supported classes :
+ * Will inject all extras in the following supported classes :
  * <ul>
  * <li>{@link Activity}</li>
  * <li>{@link Service}</li>
@@ -172,7 +172,7 @@ public class InjectResourceProcessor implements IClassTransformer {
       List<CtConstructor> ctConstructors = extractValidConstructors(targetClazz);
       if (ctConstructors.isEmpty()) {
         throw new InjectResourceException(format(
-            "Injecting resource in %s is not supported. Injection is supported in Activities, "
+            "Injecting extra in %s is not supported. Injection is supported in Activities, "
                 + "Fragments (native and support), views and classes with a single constructor "
                 + "that accept a single paramater which has to "
                 + "be of one of the type listed earlier.", targetClazz));
@@ -302,7 +302,7 @@ public class InjectResourceProcessor implements IClassTransformer {
     return new StringBuilder().append("android.app.Application application = ")
         .append(GET_APPLICATION_TAG)
         .append(";\n")
-        .append("android.content.res.Resources resources = application.getResources();\n")
+        .append("android.content.res.Resources extras = application.getResources();\n")
         .toString();
   }
 
@@ -332,7 +332,7 @@ public class InjectResourceProcessor implements IClassTransformer {
       buffer.append(field.getName());
       buffer.append(" = ");
 
-      String root = "resources";
+      String root = "extras";
       String findResourceString = "";
       ClassPool classPool = targetClazz.getClassPool();
       if (isSubClass(classPool, field.getType(), String.class)) {
@@ -341,14 +341,14 @@ public class InjectResourceProcessor implements IClassTransformer {
         findResourceString = "getBoolean(" + id + ")";
       } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
         root = null;
-        findResourceString = "new Boolean(resources.getBoolean(" + id + "))";
+        findResourceString = "new Boolean(extras.getBoolean(" + id + "))";
       } else if (isSubClass(classPool, field.getType(), ColorStateList.class)) {
         findResourceString = "getColorStateList(" + id + ")";
       } else if (field.getType().subtypeOf(CtClass.intType)) {
         findResourceString = "getInteger(" + id + ")";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
         root = null;
-        findResourceString = "new Integer(resources.getInteger(" + id + "))";
+        findResourceString = "new Integer(extras.getInteger(" + id + "))";
       } else if (isSubClass(classPool, field.getType(), Drawable.class)) {
         findResourceString = "getDrawable(" + id + ")";
       } else if (isStringArray(field, classPool)) {

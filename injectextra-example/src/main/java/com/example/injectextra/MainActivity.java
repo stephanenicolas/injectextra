@@ -1,11 +1,11 @@
-package com.example.injectresource;
+package com.example.injectextra;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import com.github.stephanenicolas.injectresource.InjectResource;
+import com.github.stephanenicolas.injectextra.InjectResource;
 
 public class MainActivity extends Activity {
 

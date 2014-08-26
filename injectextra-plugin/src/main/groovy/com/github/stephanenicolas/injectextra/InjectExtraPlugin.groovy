@@ -1,4 +1,4 @@
-package com.github.stephanenicolas.injectresource
+package com.github.stephanenicolas.injectextra
 
 import com.github.stephanenicolas.morpheus.AbstractMorpheusPlugin
 import javassist.build.IClassTransformer
@@ -17,7 +17,7 @@ public class InjectResourcePlugin extends AbstractMorpheusPlugin {
   @Override
   protected void configure(Project project) {
     project.dependencies {
-      provided 'com.github.stephanenicolas.injectresource:injectresource-annotations:1.0.0-SNAPSHOT'
+      provided 'com.github.stephanenicolas.injectextra:injectextra-annotations:1.0.0-SNAPSHOT'
     }
   }
 
@@ -28,6 +28,6 @@ public class InjectResourcePlugin extends AbstractMorpheusPlugin {
 
   @Override
   protected String getExtension() {
-    "injectresource"
+    "injectextra"
   }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="com.github.stephanenicolas.injectresource" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+<module external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="com.github.stephanenicolas.injectextra" external.system.module.version="1.0.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
-        <option name="GRADLE_PROJECT_PATH" value=":injectresource-plugin" />
+        <option name="GRADLE_PROJECT_PATH" value=":injectextra-plugin" />
       </configuration>
     </facet>
     <facet type="java-gradle" name="Java-Gradle">
@@ -21,14 +21,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/groovy" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/groovy" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/extras" type="java-extra" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/extras" type="java-test-extra" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="injectresource-annotations" exported="" />
+    <orderEntry type="module" module-name="injectextra-annotations" exported="" />
     <orderEntry type="library" exported="" name="javassist-build-plugin-api-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="afterburner-library-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="morpheus-plugin-1.0.1" level="project" />
@@ -108,7 +108,7 @@
     <orderEntry type="library" exported="" name="gradle-docs-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-base-services-groovy-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-base-services-1.12" level="project" />
-    <orderEntry type="library" exported="" name="gradle-resources-1.12" level="project" />
+    <orderEntry type="library" exported="" name="gradle-extras-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-cli-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-native-1.12" level="project" />
     <orderEntry type="library" exported="" name="jna-3.2.7" level="project" />
