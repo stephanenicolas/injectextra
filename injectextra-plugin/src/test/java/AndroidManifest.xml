@@ -5,8 +5,7 @@
   <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="16"/>
   <application
       android:icon="@null"
-      android:label="test"
-      android:name="com.github.stephanenicolas.injectextra.InjectExtraApplication">
+      android:label="test">
   </application>
 
 </manifest>

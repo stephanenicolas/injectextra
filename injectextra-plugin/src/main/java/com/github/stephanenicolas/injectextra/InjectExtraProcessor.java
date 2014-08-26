@@ -106,17 +106,16 @@ public class InjectExtraProcessor implements IClassTransformer {
 
       //workaround for robolectric
       //https://github.com/robolectric/robolectric/pull/1240
-      int id = 0;
-      boolean tag = false;
+      String value = null;
+      boolean optional = false;
       try {
         Method method = annotionClass.getMethod("value");
-        id = (Integer) method.invoke(annotation);
+        value = (String) method.invoke(annotation);
         method = annotionClass.getMethod("optional");
-        tag = (boolean) method.invoke(annotation);
+        optional = (boolean) method.invoke(annotation);
       } catch (Exception e) {
-        throw new RuntimeException("How can we get here ?");
+        log.debug("Exception thrown during parsing of InjectExtra annotation", e);
       }
-      boolean isUsingId = id != -1;
 
       buffer.append(field.getName());
       buffer.append(" = ");
@@ -125,21 +124,21 @@ public class InjectExtraProcessor implements IClassTransformer {
       String findExtraString = "";
       ClassPool classPool = targetClazz.getClassPool();
       if (isSubClass(classPool, field.getType(), String.class)) {
-        findExtraString = "getString(" + id + ")";
+        findExtraString = "getString(" + value + ")";
       } else if (field.getType().subtypeOf(CtClass.booleanType)) {
-        findExtraString = "getBoolean(" + id + ")";
+        findExtraString = "getBoolean(" + value + ")";
       } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
         root = null;
-        findExtraString = "new Boolean($1.getBoolean(" + id + "))";
+        findExtraString = "new Boolean($1.getBoolean(" + value + "))";
       } else if (field.getType().subtypeOf(CtClass.intType)) {
-        findExtraString = "getInt(" + id + ")";
+        findExtraString = "getInt(" + value + ")";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
         root = null;
-        findExtraString = "new Integer($1.getInt(" + id + "))";
+        findExtraString = "new Integer($1.getInt(" + value + "))";
       } else if (isStringArray(field, classPool)) {
-        findExtraString = "getStringArray(" + id + ")";
+        findExtraString = "getStringArray(" + value + ")";
       } else if (isIntArray(field)) {
-        findExtraString = "getIntArray(" + id + ")";
+        findExtraString = "getIntArray(" + value + ")";
       } else {
         throw new NotFoundException(
             format("InjectExtra doen't know how to inject field %s of type %s in %s",

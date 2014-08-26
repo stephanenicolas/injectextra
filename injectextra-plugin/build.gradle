@@ -100,36 +100,6 @@ modifyPom {
   }
 }
 
-//process test resources via aapt. Needs ANDROID_HOME to be set
-//task('aaptTestResources') {
-//  def androidHome = System.getenv("ANDROID_HOME")
-//  def command = "$androidHome/build-tools/19.1.0/aapt "
-//  String[] args = [
-//    "p",
-//    "-v",
-//    "-f",
-//    "-I",
-//    "$androidHome/platforms/android-20/android.jar",
-//    "-M",
-//    "${project.file('src/test/java/AndroidManifest.xml')}",
-//    "-S",
-//    "${project.file('src/test/resources')}",
-//    "-m",
-//    "-J",
-//    "${project.file('src/test/java/')}"
-//  ]
-//  command += args.join(" ")
-//  def process = command.execute()
-//  println "stderr: ${process.err.text}"
-//  println "stdout: ${process.in.text}"
-//  process.waitFor()
-//  if (process.exitValue() != 0) {
-//    throw new GradleScriptException("Impossible to process test resources", null)
-//  }
-//}
-
-//test.dependsOn aaptTestResources
-
 //as we want to have non test classes in test source tree
 //http://stackoverflow.com/a/14947906/693752
 tasks.withType(Test) {
