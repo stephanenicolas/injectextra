@@ -17,7 +17,7 @@ public class InjectExtraPlugin extends AbstractMorpheusPlugin {
   @Override
   protected void configure(Project project) {
     project.dependencies {
-      provided 'com.github.stephanenicolas.injectextra:injectextra-annotations:1.0.0-SNAPSHOT'
+      provided 'com.github.stephanenicolas.injectextra:injectextra-annotations:1.+'
     }
   }
 

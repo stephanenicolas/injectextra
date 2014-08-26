@@ -27,9 +27,6 @@ import static java.lang.String.format;
 @Slf4j
 public class InjectExtraProcessor implements IClassTransformer {
 
-  private final static String GET_APPLICATION_TAG = "GET_APPLICATION_TAG";
-  private static final String GET_ROOT_TAG = "GET_ROOT";
-
   private AfterBurner afterBurner = new AfterBurner();
 
   @Override
