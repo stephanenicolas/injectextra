@@ -34,6 +34,16 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.arrayB, is(intent.getIntArrayExtra(TestActivity.EXTRA_ID_INTEGER_ARRAY)));
   }
 
+  @Test(expected = RuntimeException.class)
+  public void shouldInjectExtra_optional_false() {
+     Robolectric.buildActivity(TestActivity.class).create().get();
+  }
+
+  @Test
+  public void shouldInjectExtra_optional_true() {
+     Robolectric.buildActivity(TestActivityOptional.class).create().get();
+  }
+
   public static class TestActivity extends Activity {
     public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
     public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
@@ -54,6 +64,29 @@ public class InjectExtraProcessorInActivityTest {
     @InjectExtra(TestActivity.EXTRA_ID_STRING_ARRAY)
     protected String[] arrayA;
     @InjectExtra(TestActivity.EXTRA_ID_INTEGER_ARRAY)
+    protected int[] arrayB;
+  }
+
+  public static class TestActivityOptional extends Activity {
+    public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
+    public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
+    public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
+    public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
+    public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
+
+    @InjectExtra(value = TestActivity.EXTRA_ID_STRING, optional = true)
+    protected String string;
+    @InjectExtra(value = TestActivity.EXTRA_ID_INTEGER, optional = true)
+    protected int intA;
+    @InjectExtra(value = TestActivity.EXTRA_ID_INTEGER, optional = true)
+    protected Integer intB;
+    @InjectExtra(value = TestActivity.EXTRA_ID_BOOLEAN, optional = true)
+    protected boolean boolA;
+    @InjectExtra(value = TestActivity.EXTRA_ID_BOOLEAN, optional = true)
+    protected Boolean boolB;
+    @InjectExtra(value = TestActivity.EXTRA_ID_STRING_ARRAY, optional = true)
+    protected String[] arrayA;
+    @InjectExtra(value = TestActivity.EXTRA_ID_INTEGER_ARRAY, optional = true)
     protected int[] arrayB;
   }
 }

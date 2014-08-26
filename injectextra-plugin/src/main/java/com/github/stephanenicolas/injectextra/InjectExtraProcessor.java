@@ -1,6 +1,7 @@
 package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
+import android.content.Intent;
 import com.github.stephanenicolas.afterburner.AfterBurner;
 import com.github.stephanenicolas.afterburner.exception.AfterBurnerImpossibleException;
 import java.lang.annotation.Annotation;
@@ -119,39 +120,43 @@ public class InjectExtraProcessor implements IClassTransformer {
 
       buffer.append(field.getName());
       buffer.append(" = ");
-
-      String root = "getIntent()";
+      String assignment = buffer.toString();
+      String fieldName = field.getName();
+      buffer = new StringBuffer();
       String findExtraString = "";
       ClassPool classPool = targetClazz.getClassPool();
       if (isSubClass(classPool, field.getType(), String.class)) {
-        findExtraString = "getStringExtra(" + value + ")";
+        findExtraString = "getIntent().getStringExtra(" + value + ")";
       } else if (field.getType().subtypeOf(CtClass.booleanType)) {
-        findExtraString = "getBooleanExtra(" + value + ", false)";
+        findExtraString = "getIntent().getBooleanExtra(" + value + ", false)";
       } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
-        root = null;
         findExtraString = "new Boolean(getIntent().getBooleanExtra(" + value + ", false))";
       } else if (field.getType().subtypeOf(CtClass.intType)) {
-        findExtraString = "getIntExtra(" + value + ", -1)";
+        findExtraString = "getIntent().getIntExtra(" + value + ", -1)";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
-        root = null;
         findExtraString = "new Integer(getIntent().getInt(" + value + ", -1))";
       } else if (isStringArray(field, classPool)) {
-        findExtraString = "getStringArrayExtra(" + value + ")";
+        findExtraString = "getIntent().getStringArrayExtra(" + value + ")";
       } else if (isIntArray(field)) {
-        findExtraString = "getIntArrayExtra(" + value + ")";
+        findExtraString = "getIntent().getIntArrayExtra(" + value + ")";
       } else {
         throw new NotFoundException(
             format("InjectExtra doen't know how to inject field %s of type %s in %s",
                 field.getName(), field.getType().getName(), targetClazz.getName()));
       }
-      if (root != null) {
-        buffer.append(root);
-        buffer.append(".");
-      }
+      findExtraString = checkOptional(assignment, value, optional, findExtraString, fieldName);
       buffer.append(findExtraString);
       buffer.append(";\n");
     }
     return buffer.toString();
+  }
+
+  private String checkOptional(String fieldAssignment, String value, boolean optional, String findExtraString,
+      String fieldName) {
+    if(!optional) {
+      findExtraString = "if (getIntent().hasExtra(" + value + ")) { "+ fieldAssignment + findExtraString + "; } else { throw new RuntimeException(\"Field " + fieldName +"is not optional and is not present in extras.\");}";
+    }
+    return findExtraString;
   }
 
   private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {
