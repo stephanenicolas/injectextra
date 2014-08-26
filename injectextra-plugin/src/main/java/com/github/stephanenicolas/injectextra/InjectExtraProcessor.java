@@ -138,6 +138,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getBooleanArrayExtra(" + value + ")";
       } else if (isByteArray(field)) {
         findExtraString = "getIntent().getByteArrayExtra(" + value + ")";
+      } else if (isCharArray(field)) {
+        findExtraString = "getIntent().getCharArrayExtra(" + value + ")";
       } else if (isStringArray(field, classPool)) {
         findExtraString = "getIntent().getStringArrayExtra(" + value + ")";
       } else if (isIntArray(field)) {
@@ -150,6 +152,10 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getByteExtra(" + value + ", -1)";
       } else if (isSubClass(classPool, field.getType(), Byte.class)) {
         findExtraString = "new Byte(getIntent().getByteExtra(" + value + ", -1))";
+      } else if (field.getType().subtypeOf(CtClass.charType)) {
+        findExtraString = "getIntent().getCharExtra(" + value + ", -1)";
+      } else if (isSubClass(classPool, field.getType(), Character.class)) {
+        findExtraString = "new Char(getIntent().getCharExtra(" + value + ", -1))";
       } else if (isSubClass(classPool, field.getType(), Object.class)) {
         findExtraString = "getIntent().get(" + value + ")";
       } else {
@@ -196,6 +202,12 @@ public class InjectExtraProcessor implements IClassTransformer {
     return field.getType().isArray() && field.getType()
         .getComponentType()
         .subtypeOf(CtClass.byteType);
+  }
+
+  private boolean isCharArray(CtField field) throws NotFoundException {
+    return field.getType().isArray() && field.getType()
+        .getComponentType()
+        .subtypeOf(CtClass.charType);
   }
 
   private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {
