@@ -20,10 +20,13 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_BYTE = "EXTRA_ID_BYTE";
   public static final String EXTRA_ID_CHAR = "EXTRA_ID_CHAR";
   public static final String EXTRA_ID_CHAR_SEQUENCE = "EXTRA_ID_CHAR_SEQUENCE";
+  public static final String EXTRA_ID_FLOAT = "EXTRA_ID_FLOAT";
   public static final String EXTRA_ID_BYTE_ARRAY = "EXTRA_ID_BYTE_ARRAY";
   public static final String EXTRA_ID_CHAR_ARRAY = "EXTRA_ID_CHAR_ARRAY";
   public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
   public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
+  public static final String EXTRA_ID_FLOAT_ARRAY = "EXTRA_ID_FLOAT_ARRAY";
+
 
   @Test
   public void shouldInjectExtra_simple() {
@@ -34,10 +37,12 @@ public class InjectExtraProcessorInActivityTest {
     intent.putExtra(EXTRA_ID_BYTE, (byte)22);
     intent.putExtra(EXTRA_ID_CHAR, 'a');
     intent.putExtra(EXTRA_ID_CHAR_SEQUENCE, (CharSequence) new StringBuffer("foo"));
+    intent.putExtra(EXTRA_ID_FLOAT, 12f);
     intent.putExtra(EXTRA_ID_STRING_ARRAY, new String[] { "foo", "bar" });
     intent.putExtra(EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
     intent.putExtra(EXTRA_ID_CHAR_ARRAY, new char[] {'a'});
     intent.putExtra(EXTRA_ID_BYTE_ARRAY, new byte[] {(byte)2});
+    intent.putExtra(EXTRA_ID_FLOAT_ARRAY, new float[] {(float)12f});
 
     System.out.println("Extras used for tests " + intent.getExtras().toString());
     TestActivity activity =
@@ -47,15 +52,23 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.intB, is(intent.getIntExtra(EXTRA_ID_INTEGER, 1)));
     assertThat(activity.boolA, is(intent.getBooleanExtra(EXTRA_ID_BOOLEAN, false)));
     assertThat(activity.boolB, is(intent.getBooleanExtra(EXTRA_ID_BOOLEAN, false)));
-    assertThat(activity.byteA, is(intent.getByteExtra(EXTRA_ID_BYTE, (byte)1)));
+    assertThat(activity.byteA, is(intent.getByteExtra(EXTRA_ID_BYTE, (byte) 1)));
     assertThat(activity.byteB, is(intent.getByteExtra(EXTRA_ID_BYTE, (byte)1)));
     assertThat(activity.charA, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
     assertThat(activity.charB, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
     assertThat(activity.charSeq, is(intent.getCharSequenceExtra(EXTRA_ID_CHAR_SEQUENCE)));
+
+
+    //TODO from charSequence array and lists.
+
+    assertThat(activity.floatA, is(intent.getFloatExtra(EXTRA_ID_FLOAT, 12f)));
+    assertThat(activity.floatB, is(intent.getFloatExtra(EXTRA_ID_FLOAT, 12f)));
+
     assertThat(activity.arrayA, is(intent.getStringArrayExtra(EXTRA_ID_STRING_ARRAY)));
     assertThat(activity.arrayB, is(intent.getIntArrayExtra(EXTRA_ID_INTEGER_ARRAY)));
     assertThat(activity.arrayC, is(intent.getCharArrayExtra(EXTRA_ID_CHAR_ARRAY)));
     assertThat(activity.arrayD, is(intent.getByteArrayExtra(EXTRA_ID_BYTE_ARRAY)));
+    assertThat(activity.arrayE, is(intent.getFloatArrayExtra(EXTRA_ID_FLOAT_ARRAY)));
   }
 
   @Test(expected = RuntimeException.class)
@@ -100,6 +113,10 @@ public class InjectExtraProcessorInActivityTest {
     protected Character charB;
     @InjectExtra(EXTRA_ID_CHAR_SEQUENCE)
     protected CharSequence charSeq;
+    @InjectExtra(EXTRA_ID_FLOAT)
+    public float floatA;
+    @InjectExtra(EXTRA_ID_FLOAT)
+    public Float floatB;
     @InjectExtra(EXTRA_ID_STRING_ARRAY)
     protected String[] arrayA;
     @InjectExtra(EXTRA_ID_INTEGER_ARRAY)
@@ -108,6 +125,8 @@ public class InjectExtraProcessorInActivityTest {
     protected char[] arrayC;
     @InjectExtra(EXTRA_ID_BYTE_ARRAY)
     protected byte[] arrayD;
+    @InjectExtra(EXTRA_ID_FLOAT_ARRAY)
+    protected float[] arrayE;
   }
 
   public static class TestActivityOptional extends Activity {

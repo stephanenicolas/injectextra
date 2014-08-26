@@ -133,6 +133,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getByteArrayExtra(\"" + value + "\")";
       } else if (isCharArray(field)) {
         findExtraString = "getIntent().getCharArrayExtra(\"" + value + "\")";
+      } else if (isFloatArray(field)) {
+        findExtraString = "getIntent().getFloatArrayExtra(\"" + value + "\")";
       } else if (isCharSequenceArray(field, classPool)) {
         findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
       } else if (isCharSequenceArrayList(field, classPool)) {
@@ -153,6 +155,10 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "new Byte(getIntent().getByteExtra(\"" + value + "\", (byte)-1))";
       } else if (field.getType().subtypeOf(CtClass.charType)) {
         findExtraString = "getIntent().getCharExtra(\"" + value + "\", '\\u0000')";
+      } else if (field.getType().subtypeOf(CtClass.floatType)) {
+        findExtraString = "getIntent().getFloatExtra(\"" + value + "\", -1f)";
+      } else if (isSubClass(classPool, field.getType(), Float.class)) {
+        findExtraString = "new Float(getIntent().getFloatExtra(\"" + value + "\", (float)-1f))";
       } else if (isSubClass(classPool, field.getType(), Character.class)) {
         findExtraString = "new Character(getIntent().getCharExtra(\"" + value + "\", '\\u0000'))";
       } else if (isSubClass(classPool, field.getType(), CharSequence.class)) {
@@ -218,6 +224,12 @@ public class InjectExtraProcessor implements IClassTransformer {
     return field.getType().isArray() && field.getType()
         .getComponentType()
         .subtypeOf(CtClass.charType);
+  }
+
+  private boolean isFloatArray(CtField field) throws NotFoundException {
+    return field.getType().isArray() && field.getType()
+        .getComponentType()
+        .subtypeOf(CtClass.floatType);
   }
 
   private boolean isCharSequenceArray(CtField field, ClassPool classPool) throws NotFoundException {
