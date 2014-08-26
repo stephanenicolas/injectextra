@@ -20,9 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 import static java.lang.String.format;
 
 /**
- * TODO
+ * Injects all extras form intent inside an activity.
  *
  * @author SNI
+ * @see {@link InjectExtra}
  */
 @Slf4j
 public class InjectExtraProcessor implements IClassTransformer {
@@ -136,6 +137,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getStringArrayExtra(" + value + ")";
       } else if (isIntArray(field)) {
         findExtraString = "getIntent().getIntArrayExtra(" + value + ")";
+      } else if (isSubClass(classPool, field.getType(), Object.class)) {
+        findExtraString = "getIntent().get(" + value + ")";
       } else {
         throw new NotFoundException(
             format("InjectExtra doen't know how to inject field %s of type %s in %s",
