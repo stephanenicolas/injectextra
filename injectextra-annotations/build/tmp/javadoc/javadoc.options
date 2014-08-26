@@ -1,6 +1,0 @@
--classpath '/Users/administrateur/git/injectextra/injectextra-annotations/build/classes/main:/Users/administrateur/git/injectextra/injectextra-annotations/build/resources/main'
--d '/Users/administrateur/git/injectextra/injectextra-annotations/build/docs/javadoc'
--doctitle 'injectextra-annotations 1.0.0-SNAPSHOT API'
--quiet 
--windowtitle 'injectextra-annotations 1.0.0-SNAPSHOT API'
-'/Users/administrateur/git/injectextra/injectextra-annotations/src/main/java/com/github/stephanenicolas/injectextra/InjectExtra.java'
