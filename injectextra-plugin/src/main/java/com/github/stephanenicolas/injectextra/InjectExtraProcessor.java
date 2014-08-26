@@ -2,6 +2,7 @@ package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import com.github.stephanenicolas.afterburner.AfterBurner;
 import com.github.stephanenicolas.afterburner.exception.AfterBurnerImpossibleException;
@@ -142,6 +143,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getIntArrayExtra(" + value + ")";
       } else if (isSubClass(classPool, field.getType(), IBinder.class)) {
         findExtraString = "getIntent().getIBinder(" + value + ")";
+      } else if (isSubClass(classPool, field.getType(), Bundle.class)) {
+        findExtraString = "getIntent().getBundle(" + value + ")";
       } else if (isSubClass(classPool, field.getType(), Object.class)) {
         findExtraString = "getIntent().get(" + value + ")";
       } else {
