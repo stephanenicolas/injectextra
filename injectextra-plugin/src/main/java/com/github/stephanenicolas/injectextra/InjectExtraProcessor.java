@@ -1,7 +1,6 @@
 package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import com.github.stephanenicolas.afterburner.AfterBurner;
@@ -137,6 +136,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "new Integer(getIntent().getIntExtra(" + value + ", -1))";
       } else if (isBoolArray(field)) {
         findExtraString = "getIntent().getBooleanArrayExtra(" + value + ")";
+      } else if (isByteArray(field)) {
+        findExtraString = "getIntent().getByteArrayExtra(" + value + ")";
       } else if (isStringArray(field, classPool)) {
         findExtraString = "getIntent().getStringArrayExtra(" + value + ")";
       } else if (isIntArray(field)) {
@@ -145,6 +146,10 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getIBinder(" + value + ")";
       } else if (isSubClass(classPool, field.getType(), Bundle.class)) {
         findExtraString = "getIntent().getBundle(" + value + ")";
+      } else if (field.getType().subtypeOf(CtClass.byteType)) {
+        findExtraString = "getIntent().getByteExtra(" + value + ", -1)";
+      } else if (isSubClass(classPool, field.getType(), Byte.class)) {
+        findExtraString = "new Byte(getIntent().getByteExtra(" + value + ", -1))";
       } else if (isSubClass(classPool, field.getType(), Object.class)) {
         findExtraString = "getIntent().get(" + value + ")";
       } else {
@@ -156,16 +161,27 @@ public class InjectExtraProcessor implements IClassTransformer {
       buffer.append(findExtraString);
       buffer.append(";\n");
       if (!field.getType().isPrimitive() && !Nullable.isNullable(field)) {
-        buffer.append("if (" + fieldName + " == null) { throw new RuntimeException(\"Field " + fieldName + " is null and is not @Nullable.\"); }");
+        buffer.append("if ("
+            + fieldName
+            + " == null) { throw new RuntimeException(\"Field "
+            + fieldName
+            + " is null and is not @Nullable.\"); }");
       }
     }
     return buffer.toString();
   }
 
-  private String checkOptional(String fieldAssignment, String value, boolean optional, String findExtraString,
-      String fieldName) {
-    if(!optional) {
-      findExtraString = "if (getIntent().hasExtra(" + value + ")) { "+ fieldAssignment + findExtraString + "; } else { throw new RuntimeException(\"Field " + fieldName +" is not optional and is not present in extras.\");}";
+  private String checkOptional(String fieldAssignment, String value, boolean optional,
+      String findExtraString, String fieldName) {
+    if (!optional) {
+      findExtraString = "if (getIntent().hasExtra("
+          + value
+          + ")) { "
+          + fieldAssignment
+          + findExtraString
+          + "; } else { throw new RuntimeException(\"Field "
+          + fieldName
+          + " is not optional and is not present in extras.\");}";
     }
     return findExtraString;
   }
@@ -174,6 +190,12 @@ public class InjectExtraProcessor implements IClassTransformer {
     return field.getType().isArray() && field.getType()
         .getComponentType()
         .subtypeOf(CtClass.booleanType);
+  }
+
+  private boolean isByteArray(CtField field) throws NotFoundException {
+    return field.getType().isArray() && field.getType()
+        .getComponentType()
+        .subtypeOf(CtClass.byteType);
   }
 
   private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {
