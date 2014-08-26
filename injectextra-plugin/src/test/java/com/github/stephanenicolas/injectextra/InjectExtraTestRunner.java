@@ -19,10 +19,10 @@ import org.robolectric.res.Fs;
  * Created by administrateur on 2014-08-21.
  */
 @Slf4j
-public class InjectResourceTestRunner extends RobolectricTestRunner {
-  private InjectResourceProcessor processor = new InjectResourceProcessor();
+public class InjectExtraTestRunner extends RobolectricTestRunner {
+  private InjectExtraProcessor processor = new InjectExtraProcessor();
 
-  public InjectResourceTestRunner(Class<?> testClass) throws InitializationError {
+  public InjectExtraTestRunner(Class<?> testClass) throws InitializationError {
     super(testClass);
   }
 
@@ -36,7 +36,7 @@ public class InjectResourceTestRunner extends RobolectricTestRunner {
           try {
             CtClass dummyClass = ClassPool.getDefault().get(className);
             if (processor.shouldTransform(dummyClass)) {
-              log.debug("Intercepting via InjectResource " + className);
+              log.debug("Intercepting via InjectExtra " + className);
               processor.applyTransformations(dummyClass);
               byte[] bytes = dummyClass.toBytecode();
               System.out.println("Size of weaved byte code :" + bytes.length);

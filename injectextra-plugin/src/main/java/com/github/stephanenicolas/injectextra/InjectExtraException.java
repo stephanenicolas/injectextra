@@ -1,14 +1,14 @@
 package com.github.stephanenicolas.injectextra;
 
 /**
- * An exception that can be thrown by the {@link InjectResourceProcessor}.
+ * An exception that can be thrown by the {@link InjectExtraProcessor}.
  */
-public class InjectResourceException extends Exception {
-  public InjectResourceException(String message) {
+public class InjectExtraException extends Exception {
+  public InjectExtraException(String message) {
     super(message);
   }
 
-  public InjectResourceException(String message, Throwable cause) {
+  public InjectExtraException(String message, Throwable cause) {
     super(message, cause);
   }
 }

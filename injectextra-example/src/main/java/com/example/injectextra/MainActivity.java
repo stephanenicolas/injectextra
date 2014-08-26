@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import com.github.stephanenicolas.injectextra.InjectResource;
+import com.github.stephanenicolas.injectextra.InjectExtra;
 
 public class MainActivity extends Activity {
 
-  @InjectResource(R.string.app_name)
+  @InjectExtra(R.string.app_name)
   private String appName;
 
   private TextView view;

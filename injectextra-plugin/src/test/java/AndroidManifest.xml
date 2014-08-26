@@ -6,7 +6,7 @@
   <application
       android:icon="@null"
       android:label="test"
-      android:name="com.github.stephanenicolas.injectextra.InjectResourceApplication">
+      android:name="com.github.stephanenicolas.injectextra.InjectExtraApplication">
   </application>
 
 </manifest>

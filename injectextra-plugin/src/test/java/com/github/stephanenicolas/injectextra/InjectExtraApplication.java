@@ -8,6 +8,6 @@ import android.view.animation.Animation;
 /**
 * SNI
 */
-public class InjectResourceApplication extends Application {
-  //just used to load TestInjectResourceApplication
+public class InjectExtraApplication extends Application {
+  //just used to load TestInjectExtraApplication
 }

@@ -28,17 +28,17 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * The value corresponds to the id of the extra.<br />
  *
  * You may specify the name of the extra instead of the id using {@link #name()},
- * which will use {@link android.content.res.Resources#getIdentifier(String, String, String)} to
+ * which will use {@link android.content.res.Extras#getIdentifier(String, String, String)} to
  * resolve the extra by name.
  *
  * Usage example:<br />
- * {@code @InjectResource(R.string.hello) protected String hello;} <br/>
- * {@code @InjectResource(name="com.myapp:string/hello") protected String hello;}
+ * {@code @InjectExtra(R.string.hello) protected String hello;} <br/>
+ * {@code @InjectExtra(name="com.myapp:string/hello") protected String hello;}
  *
  * @author Mike Burton
  */
 @Retention(RUNTIME) @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
-public @interface InjectResource {
+public @interface InjectExtra {
   int value() default -1;
 
   String name() default "";

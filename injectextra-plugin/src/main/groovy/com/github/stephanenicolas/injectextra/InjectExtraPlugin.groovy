@@ -7,11 +7,11 @@ import org.gradle.api.Project
 /**
  * @author SNI
  */
-public class InjectResourcePlugin extends AbstractMorpheusPlugin {
+public class InjectExtraPlugin extends AbstractMorpheusPlugin {
 
   @Override
   public IClassTransformer[] getTransformers(Project project) {
-    return new InjectResourceProcessor();
+    return new InjectExtraProcessor();
   }
 
   @Override
@@ -23,7 +23,7 @@ public class InjectResourcePlugin extends AbstractMorpheusPlugin {
 
   @Override
   protected Class getPluginExtension() {
-    InjectResourcePluginExtension
+    InjectExtraPluginExtension
   }
 
   @Override

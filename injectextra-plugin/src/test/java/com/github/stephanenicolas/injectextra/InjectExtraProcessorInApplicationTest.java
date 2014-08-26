@@ -12,8 +12,8 @@ import static org.junit.Assert.assertThat;
 /**
  * @author SNI
  */
-@RunWith(InjectResourceTestRunner.class)
-public class InjectResourceProcessorInApplicationTest {
+@RunWith(InjectExtraTestRunner.class)
+public class InjectExtraProcessorInApplicationTest {
   public static final int RESOURCE_ID_STRING = R.string.string1;
   public static final int RESOURCE_ID_INTEGER = R.integer.integer1;
   public static final int RESOURCE_ID_BOOLEAN = R.bool.bool1;
@@ -24,23 +24,23 @@ public class InjectResourceProcessorInApplicationTest {
   public static final int RESOURCE_COLOR_STATE_LIST = R.color.colorlist;
 
   @Test
-  public void shouldInjectResource_simple() {
-    TestInjectResourceApplication app = (TestInjectResourceApplication) Robolectric.application;
+  public void shouldInjectExtra_simple() {
+    TestInjectExtraApplication app = (TestInjectExtraApplication) Robolectric.application;
     app.onCreate();
     assertThat(app.string,
-        is(Robolectric.application.getResources().getString(RESOURCE_ID_STRING)));
+        is(Robolectric.application.getExtras().getString(RESOURCE_ID_STRING)));
     assertThat(app.intA,
-        is(Robolectric.application.getResources().getInteger(RESOURCE_ID_INTEGER)));
+        is(Robolectric.application.getExtras().getInteger(RESOURCE_ID_INTEGER)));
     assertThat(app.intB,
-        is(Robolectric.application.getResources().getInteger(RESOURCE_ID_INTEGER)));
+        is(Robolectric.application.getExtras().getInteger(RESOURCE_ID_INTEGER)));
     assertThat(app.boolA,
-        is(Robolectric.application.getResources().getBoolean(RESOURCE_ID_BOOLEAN)));
+        is(Robolectric.application.getExtras().getBoolean(RESOURCE_ID_BOOLEAN)));
     assertThat(app.boolB,
-        is(Robolectric.application.getResources().getBoolean(RESOURCE_ID_BOOLEAN)));
+        is(Robolectric.application.getExtras().getBoolean(RESOURCE_ID_BOOLEAN)));
     assertThat(app.arrayA,
-        is(Robolectric.application.getResources().getStringArray(RESOURCE_ID_STRING_ARRAY)));
+        is(Robolectric.application.getExtras().getStringArray(RESOURCE_ID_STRING_ARRAY)));
     assertThat(app.arrayB,
-        is(Robolectric.application.getResources().getIntArray(RESOURCE_ID_INTEGER_ARRAY)));
+        is(Robolectric.application.getExtras().getIntArray(RESOURCE_ID_INTEGER_ARRAY)));
     assertNotNull(app.anim);
     //doesn't work on Robolectric..
     //assertNotNull(app.movie);
