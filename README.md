@@ -1,7 +1,7 @@
 InjectExtra [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.injectextra/injectextra-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.injectextra/injectextra-plugin)
 ==========
 
-***Injects all extras automatically.***
+***Injects everything passed by extra to an activity automatically. ***
 
 <!-- img src="https://raw.github.com/stephanenicolas/injectresource/master/assets/injectresource-logo.jpg"
 width="150px" /-->
