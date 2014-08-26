@@ -1,0 +1,3 @@
+include ':injectresource-annotations'
+include ':injectresource-plugin'
+include ':injectresource-example'

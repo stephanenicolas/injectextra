@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.stephanenicolas.injectresource.InjectResourceProcessorInApplicationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2014-08-25T22:57:48" hostname="MacBook-Pro-de-Admin.local" time="0.02">
+  <properties/>
+  <testcase name="shouldInjectResource_simple" classname="com.github.stephanenicolas.injectresource.InjectResourceProcessorInApplicationTest" time="0.02"/>
+  <system-out><![CDATA[18:57:48.189 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInApplicationTest
+18:57:48.189 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_STRING
+18:57:48.190 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_INTEGER
+18:57:48.190 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_BOOLEAN
+18:57:48.190 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_STRING_ARRAY
+18:57:48.190 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_INTEGER_ARRAY
+18:57:48.190 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_MOVIE
+18:57:48.190 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_ANIMATION
+18:57:48.190 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_COLOR_STATE_LIST
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

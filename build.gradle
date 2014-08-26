@@ -1,0 +1,53 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
+    classpath 'com.android.tools.build:gradle:0.12.2'
+    classpath 'com.github.townsfolk:gradle-release:1.2'
+  }
+}
+
+logging.captureStandardOutput LogLevel.INFO
+
+allprojects {
+  repositories {
+    mavenCentral()
+  }
+
+  group = GROUP
+}
+
+apply plugin: 'maven'
+apply plugin: 'release'
+createReleaseTag.dependsOn ':injectresource-annotations:uploadArchives',
+    ':injectresource-plugin:uploadArchives'
+
+release {
+  failOnSnapshotDependencies = false
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.12'
+}
+
+task cleanExample(type: Exec) {
+  executable = '../gradlew'
+  workingDir = project.file('injectresource-example')
+  args = ['clean']
+}
+
+task assembleExample(type: Exec) {
+  executable = '../gradlew'
+  workingDir = project.file('injectresource-example')
+  args = ['assemble']
+}
+
+task installExample(type: Exec) {
+  executable = '../gradlew'
+  workingDir = project.file('injectresource-example')
+  args = ['installDebug']
+}

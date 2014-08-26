@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.stephanenicolas.injectresource.InjectResourceProcessorInServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2014-08-25T22:57:48" hostname="MacBook-Pro-de-Admin.local" time="0.037">
+  <properties/>
+  <testcase name="shouldInjectResource_simple" classname="com.github.stephanenicolas.injectresource.InjectResourceProcessorInServiceTest" time="0.037"/>
+  <system-out><![CDATA[18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInServiceTest
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_STRING
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_INTEGER
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_BOOLEAN
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_STRING_ARRAY
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_INTEGER_ARRAY
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_MOVIE
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_ID_ANIMATION
+18:57:48.814 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field RESOURCE_COLOR_STATE_LIST
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInServiceTest$TestService
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field string
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field string has annotation InjectResource
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field intA
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field intA has annotation InjectResource
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field intB
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field intB has annotation InjectResource
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field boolA
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field boolA has annotation InjectResource
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field boolB
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field boolB has annotation InjectResource
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field arrayA
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field arrayA has annotation InjectResource
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field arrayB
+18:57:48.827 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field arrayB has annotation InjectResource
+18:57:48.828 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field movie
+18:57:48.828 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field movie has annotation InjectResource
+18:57:48.828 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field anim
+18:57:48.828 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field anim has annotation InjectResource
+18:57:48.828 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field colorStateList
+18:57:48.828 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field colorStateList has annotation InjectResource
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Class InjectResourceProcessorInServiceTest$TestService will get transformed: true
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceTestRunner - Intercepting via InjectResource com.github.stephanenicolas.injectresource.InjectResourceProcessorInServiceTest$TestService
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Analyzing InjectResourceProcessorInServiceTest$TestService
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Scanning fields in com.github.stephanenicolas.injectresource.InjectResourceProcessorInServiceTest$TestService
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field string
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field string has annotation InjectResource
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field intA
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field intA has annotation InjectResource
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field intB
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field intB has annotation InjectResource
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field boolA
+18:57:48.829 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field boolA has annotation InjectResource
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field boolB
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field boolB has annotation InjectResource
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field arrayA
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field arrayA has annotation InjectResource
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field arrayB
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field arrayB has annotation InjectResource
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field movie
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field movie has annotation InjectResource
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field anim
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field anim has annotation InjectResource
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Discovered field colorStateList
+18:57:48.830 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Field colorStateList has annotation InjectResource
+18:57:48.832 [Test worker] DEBUG c.g.s.i.InjectResourceProcessor - Preliminary body (before insertion) :android.app.Application application = GET_APPLICATION_TAG;
+android.content.res.Resources resources = application.getResources();
+string = resources.getString(2130903040);
+intA = resources.getInteger(2131165184);
+intB = new Integer(resources.getInteger(2131165184));
+boolA = resources.getBoolean(2130968576);
+boolB = new Boolean(resources.getBoolean(2130968576));
+arrayA = resources.getStringArray(2131230721);
+arrayB = resources.getIntArray(2131230720);
+movie = resources.getMovie(2130837504);
+anim = android.view.animation.AnimationUtils.loadAnimation(application, 17432576);
+colorStateList = resources.getColorStateList(2131034113);
+
+18:57:48.833 [Test worker] INFO  c.g.s.a.InsertableMethodBuilder - Creating override public void onCreate() { 
+super.onCreate();
+==BODY==}
+
+18:57:48.834 [Test worker] INFO  c.g.s.afterburner.AfterBurner - InsertableMethod : [class:com.github.stephanenicolas.injectresource.InjectResourceProcessorInServiceTest$TestService,before:null,after:onCreate,fullMethod:public void onCreate() { 
+super.onCreate();
+android.app.Application application = this.getApplication();
+android.content.res.Resources resources = application.getResources();
+string = resources.getString(2130903040);
+intA = resources.getInteger(2131165184);
+intB = new Integer(resources.getInteger(2131165184));
+boolA = resources.getBoolean(2130968576);
+boolB = new Boolean(resources.getBoolean(2130968576));
+arrayA = resources.getStringArray(2131230721);
+arrayB = resources.getIntArray(2131230720);
+movie = resources.getMovie(2130837504);
+anim = android.view.animation.AnimationUtils.loadAnimation(application, 17432576);
+colorStateList = resources.getColorStateList(2131034113);
+}
+,body:android.app.Application application = this.getApplication();
+android.content.res.Resources resources = application.getResources();
+string = resources.getString(2130903040);
+intA = resources.getInteger(2131165184);
+intB = new Integer(resources.getInteger(2131165184));
+boolA = resources.getBoolean(2130968576);
+boolB = new Boolean(resources.getBoolean(2130968576));
+arrayA = resources.getStringArray(2131230721);
+arrayB = resources.getIntArray(2131230720);
+movie = resources.getMovie(2130837504);
+anim = android.view.animation.AnimationUtils.loadAnimation(application, 17432576);
+colorStateList = resources.getColorStateList(2131034113);
+]
+18:57:48.834 [Test worker] INFO  c.g.s.afterburner.AfterBurner - Method : null
+Size of weaved byte code :2406
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
