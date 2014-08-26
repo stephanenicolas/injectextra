@@ -17,7 +17,9 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
   public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
   public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
+  public static final String EXTRA_ID_BYTE = "EXTRA_ID_BYTE";
   public static final String EXTRA_ID_CHAR = "EXTRA_ID_CHAR";
+  public static final String EXTRA_ID_BYTE_ARRAY = "EXTRA_ID_BYTE_ARRAY";
   public static final String EXTRA_ID_CHAR_ARRAY = "EXTRA_ID_CHAR_ARRAY";
   public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
   public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
@@ -28,24 +30,29 @@ public class InjectExtraProcessorInActivityTest {
     intent.putExtra(EXTRA_ID_STRING, "foo");
     intent.putExtra(EXTRA_ID_INTEGER, 2);
     intent.putExtra(EXTRA_ID_BOOLEAN, true);
+    intent.putExtra(EXTRA_ID_BYTE, (byte)22);
     intent.putExtra(EXTRA_ID_CHAR, 'a');
     intent.putExtra(EXTRA_ID_STRING_ARRAY, new String[] { "foo", "bar" });
     intent.putExtra(EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
     intent.putExtra(EXTRA_ID_CHAR_ARRAY, new char[] {'a'});
+    intent.putExtra(EXTRA_ID_BYTE_ARRAY, new byte[] {(byte)2});
 
     System.out.println("Extras used for tests " + intent.getExtras().toString());
     TestActivity activity =
         Robolectric.buildActivity(TestActivity.class).withIntent(intent).create().get();
     assertThat(activity.string, is(intent.getStringExtra(EXTRA_ID_STRING)));
-    assertThat(activity.intA, is(intent.getIntExtra(EXTRA_ID_INTEGER, -1)));
-    assertThat(activity.intB, is(intent.getIntExtra(EXTRA_ID_INTEGER, -1)));
+    assertThat(activity.intA, is(intent.getIntExtra(EXTRA_ID_INTEGER, 1)));
+    assertThat(activity.intB, is(intent.getIntExtra(EXTRA_ID_INTEGER, 1)));
     assertThat(activity.boolA, is(intent.getBooleanExtra(EXTRA_ID_BOOLEAN, false)));
     assertThat(activity.boolB, is(intent.getBooleanExtra(EXTRA_ID_BOOLEAN, false)));
+    assertThat(activity.byteA, is(intent.getByteExtra(EXTRA_ID_BYTE, (byte)1)));
+    assertThat(activity.byteB, is(intent.getByteExtra(EXTRA_ID_BYTE, (byte)1)));
     assertThat(activity.charA, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
     assertThat(activity.charB, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
     assertThat(activity.arrayA, is(intent.getStringArrayExtra(EXTRA_ID_STRING_ARRAY)));
     assertThat(activity.arrayB, is(intent.getIntArrayExtra(EXTRA_ID_INTEGER_ARRAY)));
     assertThat(activity.arrayC, is(intent.getCharArrayExtra(EXTRA_ID_CHAR_ARRAY)));
+    assertThat(activity.arrayD, is(intent.getByteArrayExtra(EXTRA_ID_BYTE_ARRAY)));
   }
 
   @Test(expected = RuntimeException.class)
@@ -80,6 +87,10 @@ public class InjectExtraProcessorInActivityTest {
     protected boolean boolA;
     @InjectExtra(EXTRA_ID_BOOLEAN)
     protected Boolean boolB;
+    @InjectExtra(EXTRA_ID_BYTE)
+    protected byte byteA;
+    @InjectExtra(EXTRA_ID_BYTE)
+    protected Byte byteB;
     @InjectExtra(EXTRA_ID_CHAR)
     protected char charA;
     @InjectExtra(EXTRA_ID_CHAR)
@@ -90,6 +101,8 @@ public class InjectExtraProcessorInActivityTest {
     protected int[] arrayB;
     @InjectExtra(EXTRA_ID_CHAR_ARRAY)
     protected char[] arrayC;
+    @InjectExtra(EXTRA_ID_BYTE_ARRAY)
+    protected byte[] arrayD;
   }
 
   public static class TestActivityOptional extends Activity {

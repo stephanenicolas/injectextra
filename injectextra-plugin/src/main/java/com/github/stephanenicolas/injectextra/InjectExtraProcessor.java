@@ -96,7 +96,7 @@ public class InjectExtraProcessor implements IClassTransformer {
 
   private String createInjectExtraStatements(List<CtField> extrasToInject, CtClass targetClazz)
       throws ClassNotFoundException, NotFoundException {
-    StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer('\n');
     for (CtField field : extrasToInject) {
       Object annotation = field.getAnnotation(InjectExtra.class);
       //must be accessed by introspection as I get a Proxy during tests.
@@ -116,11 +116,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         log.debug("Exception thrown during parsing of InjectExtra annotation", e);
       }
 
-      buffer.append(field.getName());
-      buffer.append(" = ");
-      String assignment = buffer.toString();
+      String assignment = field.getName() + " = ";
       String fieldName = field.getName();
-      buffer = new StringBuffer();
       String findExtraString = "";
       ClassPool classPool = targetClazz.getClassPool();
       //please note that default values when reading extras are not used.
@@ -151,9 +148,9 @@ public class InjectExtraProcessor implements IClassTransformer {
       } else if (isSubClass(classPool, field.getType(), Bundle.class)) {
         findExtraString = "getIntent().getBundleExtra(\"" + value + "\")";
       } else if (field.getType().subtypeOf(CtClass.byteType)) {
-        findExtraString = "getIntent().getByteExtra(\"" + value + "\", -1)";
+        findExtraString = "getIntent().getByteExtra(\"" + value + "\", (byte)-1)";
       } else if (isSubClass(classPool, field.getType(), Byte.class)) {
-        findExtraString = "new Byte(getIntent().getByteExtra(\"" + value + "\", -1))";
+        findExtraString = "new Byte(getIntent().getByteExtra(\"" + value + "\", (byte)-1))";
       } else if (field.getType().subtypeOf(CtClass.charType)) {
         findExtraString = "getIntent().getCharExtra(\"" + value + "\", '\\u0000')";
       } else if (isSubClass(classPool, field.getType(), Character.class)) {
@@ -169,31 +166,36 @@ public class InjectExtraProcessor implements IClassTransformer {
       }
       findExtraString = checkOptional(assignment, value, optional, findExtraString, fieldName);
       buffer.append(findExtraString);
-      buffer.append(";\n");
+      buffer.append("\n");
       if (!field.getType().isPrimitive() && !Nullable.isNullable(field)) {
         buffer.append("if ("
             + fieldName
-            + " == null) {\n throw new RuntimeException(\"Field "
+            + " == null) {\n  throw new RuntimeException(\"Field "
             + fieldName
-            + " is null and is not @Nullable.\"); \n}");
+            + " is null and is not @Nullable.\"); \n}\n");
       }
+      buffer.append("\n");
     }
     return buffer.toString();
   }
 
   private String checkOptional(String fieldAssignment, String value, boolean optional,
       String findExtraString, String fieldName) {
+    findExtraString = "if (getIntent().hasExtra(\""
+        + value
+        + "\")) {\n  "
+        + fieldAssignment
+        + findExtraString
+        + ";\n}";
     if (!optional) {
-      findExtraString = "if (getIntent().hasExtra(\""
-          + value
-          + "\")) {\n"
-          + fieldAssignment
-          + findExtraString
-          + "; }\n else {\n throw new RuntimeException(\"Field "
-          + fieldName
-          + " is not optional and is not present in extras.\");\n}";
+        findExtraString = findExtraString
+        + " else {\n  throw new RuntimeException(\"Field "
+        + fieldName
+        + " is not optional and is not present in extras.\");\n}";
+      return findExtraString;
+    } else {
+      return findExtraString;
     }
-    return findExtraString;
   }
 
   private boolean isBoolArray(CtField field) throws NotFoundException {
