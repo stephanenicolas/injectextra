@@ -1,17 +1,12 @@
 package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
-import android.content.res.ColorStateList;
-import android.graphics.Movie;
-import android.os.Bundle;
-import android.view.animation.Animation;
-import com.github.stephanenicolas.injectextra.InjectExtra;
+import android.content.Intent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -21,28 +16,22 @@ import static org.junit.Assert.assertThat;
 public class InjectExtraProcessorInActivityTest {
   @Test
   public void shouldInjectExtra_simple() {
-    Bundle bundle = new Bundle();
-    bundle.putString(TestActivity.EXTRA_ID_STRING, "foo");
-    bundle.putInt(TestActivity.EXTRA_ID_INTEGER, 2);
-    bundle.putBoolean(TestActivity.EXTRA_ID_BOOLEAN, true);
-    bundle.putStringArray(TestActivity.EXTRA_ID_STRING_ARRAY, new String[] {"foo","bar"});
-    bundle.putIntArray(TestActivity.EXTRA_ID_INTEGER_ARRAY, new int[] {2,3});
+    Intent intent = new Intent();
+    intent.putExtra(TestActivity.EXTRA_ID_STRING, "foo");
+    intent.putExtra(TestActivity.EXTRA_ID_INTEGER, 2);
+    intent.putExtra(TestActivity.EXTRA_ID_BOOLEAN, true);
+    intent.putExtra(TestActivity.EXTRA_ID_STRING_ARRAY, new String[] { "foo", "bar" });
+    intent.putExtra(TestActivity.EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
 
-    TestActivity activity = Robolectric.buildActivity(TestActivity.class).create(bundle).get();
-    assertThat(activity.string,
-        is(bundle.getString(TestActivity.EXTRA_ID_STRING)));
-    assertThat(activity.intA,
-        is(bundle.getInt(TestActivity.EXTRA_ID_INTEGER)));
-    assertThat(activity.intB,
-        is(bundle.getInt(TestActivity.EXTRA_ID_INTEGER)));
-    assertThat(activity.boolA,
-        is(bundle.getBoolean(TestActivity.EXTRA_ID_BOOLEAN)));
-    assertThat(activity.boolB,
-        is(bundle.getBoolean(TestActivity.EXTRA_ID_BOOLEAN)));
-    assertThat(activity.arrayA,
-        is(bundle.getStringArray(TestActivity.EXTRA_ID_STRING_ARRAY)));
-    assertThat(activity.arrayB,
-        is(bundle.getIntArray(TestActivity.EXTRA_ID_INTEGER_ARRAY)));
+    TestActivity activity =
+        Robolectric.buildActivity(TestActivity.class).withIntent(intent).create().get();
+    assertThat(activity.string, is(intent.getStringExtra(TestActivity.EXTRA_ID_STRING)));
+    assertThat(activity.intA, is(intent.getIntExtra(TestActivity.EXTRA_ID_INTEGER, -1)));
+    assertThat(activity.intB, is(intent.getIntExtra(TestActivity.EXTRA_ID_INTEGER, -1)));
+    assertThat(activity.boolA, is(intent.getBooleanExtra(TestActivity.EXTRA_ID_BOOLEAN, false)));
+    assertThat(activity.boolB, is(intent.getBooleanExtra(TestActivity.EXTRA_ID_BOOLEAN, false)));
+    assertThat(activity.arrayA, is(intent.getStringArrayExtra(TestActivity.EXTRA_ID_STRING_ARRAY)));
+    assertThat(activity.arrayB, is(intent.getIntArrayExtra(TestActivity.EXTRA_ID_INTEGER_ARRAY)));
   }
 
   public static class TestActivity extends Activity {

@@ -120,25 +120,25 @@ public class InjectExtraProcessor implements IClassTransformer {
       buffer.append(field.getName());
       buffer.append(" = ");
 
-      String root = "$1";
+      String root = "getIntent()";
       String findExtraString = "";
       ClassPool classPool = targetClazz.getClassPool();
       if (isSubClass(classPool, field.getType(), String.class)) {
-        findExtraString = "getString(" + value + ")";
+        findExtraString = "getStringExtra(" + value + ")";
       } else if (field.getType().subtypeOf(CtClass.booleanType)) {
-        findExtraString = "getBoolean(" + value + ")";
+        findExtraString = "getBooleanExtra(" + value + ", false)";
       } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
         root = null;
-        findExtraString = "new Boolean($1.getBoolean(" + value + "))";
+        findExtraString = "new Boolean(getIntent().getBooleanExtra(" + value + ", false))";
       } else if (field.getType().subtypeOf(CtClass.intType)) {
-        findExtraString = "getInt(" + value + ")";
+        findExtraString = "getIntExtra(" + value + ", -1)";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
         root = null;
-        findExtraString = "new Integer($1.getInt(" + value + "))";
+        findExtraString = "new Integer(getIntent().getInt(" + value + ", -1))";
       } else if (isStringArray(field, classPool)) {
-        findExtraString = "getStringArray(" + value + ")";
+        findExtraString = "getStringArrayExtra(" + value + ")";
       } else if (isIntArray(field)) {
-        findExtraString = "getIntArray(" + value + ")";
+        findExtraString = "getIntArrayExtra(" + value + ")";
       } else {
         throw new NotFoundException(
             format("InjectExtra doen't know how to inject field %s of type %s in %s",

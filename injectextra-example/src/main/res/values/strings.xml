@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extras>
+<resources>
 
-  <string name="app_name">InjectView Sample</string>
+  <string name="app_name">InjectExtra Sample</string>
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
 
-</extras>
+</resources>

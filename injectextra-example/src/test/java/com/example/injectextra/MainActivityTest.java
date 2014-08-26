@@ -1,5 +1,6 @@
 package com.example.injectextra;
 
+import android.os.Bundle;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,16 +14,12 @@ import static org.junit.Assert.assertThat;
 @RunWith(RobolectricTestRunner.class)
 public class MainActivityTest {
 
-  protected MainActivity activity;
-
-  @Before
-  public void setup() {
-    activity = Robolectric.buildActivity(MainActivity.class).create().get();
-  }
-
   @Test
-  public void shouldInjectView() {
+  public void shouldInjectExtra() {
+    Bundle bundle = new Bundle();
+    bundle.putString(SecondActivity.APP_NAME, "foo");
+    SecondActivity activity = Robolectric.buildActivity(SecondActivity.class).create(bundle).get();
     assertNotNull(activity.getView());
-    assertThat(activity.getView().getText(), is(activity.getText(R.string.hello_world)));
+    assertThat(activity.getView().getText().toString(), is("foo"));
   }
 }
