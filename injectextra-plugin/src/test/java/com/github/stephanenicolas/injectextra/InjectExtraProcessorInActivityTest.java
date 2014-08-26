@@ -14,24 +14,30 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(InjectExtraTestRunner.class)
 public class InjectExtraProcessorInActivityTest {
+  public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
+  public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
+  public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
+  public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
+  public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
+
   @Test
   public void shouldInjectExtra_simple() {
     Intent intent = new Intent();
-    intent.putExtra(TestActivity.EXTRA_ID_STRING, "foo");
-    intent.putExtra(TestActivity.EXTRA_ID_INTEGER, 2);
-    intent.putExtra(TestActivity.EXTRA_ID_BOOLEAN, true);
-    intent.putExtra(TestActivity.EXTRA_ID_STRING_ARRAY, new String[] { "foo", "bar" });
-    intent.putExtra(TestActivity.EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
+    intent.putExtra(EXTRA_ID_STRING, "foo");
+    intent.putExtra(EXTRA_ID_INTEGER, 2);
+    intent.putExtra(EXTRA_ID_BOOLEAN, true);
+    intent.putExtra(EXTRA_ID_STRING_ARRAY, new String[] { "foo", "bar" });
+    intent.putExtra(EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
 
     TestActivity activity =
         Robolectric.buildActivity(TestActivity.class).withIntent(intent).create().get();
-    assertThat(activity.string, is(intent.getStringExtra(TestActivity.EXTRA_ID_STRING)));
-    assertThat(activity.intA, is(intent.getIntExtra(TestActivity.EXTRA_ID_INTEGER, -1)));
-    assertThat(activity.intB, is(intent.getIntExtra(TestActivity.EXTRA_ID_INTEGER, -1)));
-    assertThat(activity.boolA, is(intent.getBooleanExtra(TestActivity.EXTRA_ID_BOOLEAN, false)));
-    assertThat(activity.boolB, is(intent.getBooleanExtra(TestActivity.EXTRA_ID_BOOLEAN, false)));
-    assertThat(activity.arrayA, is(intent.getStringArrayExtra(TestActivity.EXTRA_ID_STRING_ARRAY)));
-    assertThat(activity.arrayB, is(intent.getIntArrayExtra(TestActivity.EXTRA_ID_INTEGER_ARRAY)));
+    assertThat(activity.string, is(intent.getStringExtra(EXTRA_ID_STRING)));
+    assertThat(activity.intA, is(intent.getIntExtra(EXTRA_ID_INTEGER, -1)));
+    assertThat(activity.intB, is(intent.getIntExtra(EXTRA_ID_INTEGER, -1)));
+    assertThat(activity.boolA, is(intent.getBooleanExtra(EXTRA_ID_BOOLEAN, false)));
+    assertThat(activity.boolB, is(intent.getBooleanExtra(EXTRA_ID_BOOLEAN, false)));
+    assertThat(activity.arrayA, is(intent.getStringArrayExtra(EXTRA_ID_STRING_ARRAY)));
+    assertThat(activity.arrayB, is(intent.getIntArrayExtra(EXTRA_ID_INTEGER_ARRAY)));
   }
 
   @Test(expected = RuntimeException.class)
@@ -55,11 +61,6 @@ public class InjectExtraProcessorInActivityTest {
   }
 
   public static class TestActivity extends Activity {
-    public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
-    public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
-    public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
-    public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
-    public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
 
     @InjectExtra(EXTRA_ID_STRING)
     protected String string;
@@ -78,12 +79,6 @@ public class InjectExtraProcessorInActivityTest {
   }
 
   public static class TestActivityOptional extends Activity {
-    public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
-    public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
-    public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
-    public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
-    public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
-
     @InjectExtra(value = EXTRA_ID_STRING, optional = true)
     protected String string;
     @InjectExtra(value = EXTRA_ID_INTEGER, optional = true)
@@ -101,12 +96,6 @@ public class InjectExtraProcessorInActivityTest {
   }
 
   public static class TestActivityOptionalWithDefaults extends Activity {
-    public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
-    public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
-    public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
-    public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
-    public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
-
     @InjectExtra(value = EXTRA_ID_STRING, optional = true)
     protected String string = "";
     @InjectExtra(value = EXTRA_ID_INTEGER, optional = true)
@@ -124,12 +113,6 @@ public class InjectExtraProcessorInActivityTest {
   }
 
   public static class TestActivityNullable extends Activity {
-    public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
-    public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
-    public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
-    public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
-    public static final String EXTRA_ID_INTEGER_ARRAY = "EXTRA_ID_INTEGER_ARRAY";
-
     @Nullable
     @InjectExtra(value = EXTRA_ID_STRING, optional = true)
     protected String string;
