@@ -164,19 +164,25 @@ public class InjectExtraProcessor implements IClassTransformer {
             format("InjectExtra doen't know how to inject field %s of type %s in %s",
                 field.getName(), field.getType().getName(), targetClazz.getName()));
       }
-      findExtraString = checkOptional(assignment, value, optional, findExtraString, fieldName);
-      buffer.append(findExtraString);
+      buffer.append(checkOptional(assignment, value, optional, findExtraString, fieldName));
       buffer.append("\n");
-      if (!field.getType().isPrimitive() && !Nullable.isNullable(field)) {
-        buffer.append("if ("
-            + fieldName
-            + " == null) {\n  throw new RuntimeException(\"Field "
-            + fieldName
-            + " is null and is not @Nullable.\"); \n}\n");
-      }
+      buffer.append(checkNullable(field, fieldName));
       buffer.append("\n");
     }
     return buffer.toString();
+  }
+
+  private String checkNullable(CtField field, String fieldName)
+      throws NotFoundException {
+    String checkNullable = "";
+    if (!field.getType().isPrimitive() && !Nullable.isNullable(field)) {
+      checkNullable = "if ("
+          + fieldName
+          + " == null) {\n  throw new RuntimeException(\"Field "
+          + fieldName
+          + " is null and is not @Nullable.\"); \n}\n";
+    }
+    return checkNullable;
   }
 
   private String checkOptional(String fieldAssignment, String value, boolean optional,
@@ -192,10 +198,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         + " else {\n  throw new RuntimeException(\"Field "
         + fieldName
         + " is not optional and is not present in extras.\");\n}";
-      return findExtraString;
-    } else {
-      return findExtraString;
     }
+    return findExtraString;
   }
 
   private boolean isBoolArray(CtField field) throws NotFoundException {
