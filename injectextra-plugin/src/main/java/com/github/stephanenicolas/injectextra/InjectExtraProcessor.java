@@ -134,7 +134,7 @@ public class InjectExtraProcessor implements IClassTransformer {
       } else if (field.getType().subtypeOf(CtClass.intType)) {
         findExtraString = "getIntent().getIntExtra(" + value + ", -1)";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
-        findExtraString = "new Integer(getIntent().getInt(" + value + ", -1))";
+        findExtraString = "new Integer(getIntent().getIntExtra(" + value + ", -1))";
       } else if (isStringArray(field, classPool)) {
         findExtraString = "getIntent().getStringArrayExtra(" + value + ")";
       } else if (isIntArray(field)) {
