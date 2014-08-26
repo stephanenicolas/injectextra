@@ -134,6 +134,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getIntExtra(" + value + ", -1)";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
         findExtraString = "new Integer(getIntent().getIntExtra(" + value + ", -1))";
+      } else if (isBoolArray(field)) {
+        findExtraString = "getIntent().getBooleanArrayExtra(" + value + ")";
       } else if (isStringArray(field, classPool)) {
         findExtraString = "getIntent().getStringArrayExtra(" + value + ")";
       } else if (isIntArray(field)) {
@@ -163,6 +165,12 @@ public class InjectExtraProcessor implements IClassTransformer {
       findExtraString = "if (getIntent().hasExtra(" + value + ")) { "+ fieldAssignment + findExtraString + "; } else { throw new RuntimeException(\"Field " + fieldName +" is not optional and is not present in extras.\");}";
     }
     return findExtraString;
+  }
+
+  private boolean isBoolArray(CtField field) throws NotFoundException {
+    return field.getType().isArray() && field.getType()
+        .getComponentType()
+        .subtypeOf(CtClass.booleanType);
   }
 
   private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {
