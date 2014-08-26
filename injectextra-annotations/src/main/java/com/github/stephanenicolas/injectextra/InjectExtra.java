@@ -32,9 +32,10 @@ import java.lang.annotation.Target;
  * <br />
  * The default behavior of the {@link InjectExtra} annotation is to forbid null
  * values. However, if you wish to allow injection of null values, you should
- * use the TODO XXX Nullable XXX annotation.<br />
+ * use the @Nullable annotation. You can use any annotation class (findbugs, etc.)
+ * with the name 'Nullable' <br />
  * <br />
- * You can define a default value in Java when the extra is optional : <br /> {@code
+ * You can define a default value via Java when the extra is optional : <br /> {@code
  * @InjectExtra(value="someValue", optional=true) Integer someValue = 2;} ) <br />
  * However, it is nonsense to inject a default value in Java if the extra is
  * not optional : {@code @InjectExtra("someValue") Integer someValue = 2; // DO

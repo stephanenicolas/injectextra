@@ -100,6 +100,9 @@ modifyPom {
   }
 }
 
+check.dependsOn test
+install.dependsOn check
+
 //as we want to have non test classes in test source tree
 //http://stackoverflow.com/a/14947906/693752
 tasks.withType(Test) {

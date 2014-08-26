@@ -144,6 +144,9 @@ public class InjectExtraProcessor implements IClassTransformer {
       findExtraString = checkOptional(assignment, value, optional, findExtraString, fieldName);
       buffer.append(findExtraString);
       buffer.append(";\n");
+      if (!field.getType().isPrimitive() && !Nullable.isNullable(field)) {
+        buffer.append("if (" + fieldName + " == null) { throw new RuntimeException(\"Field " + fieldName + " is null and is not @Nullable.\"); }");
+      }
     }
     return buffer.toString();
   }
@@ -151,7 +154,7 @@ public class InjectExtraProcessor implements IClassTransformer {
   private String checkOptional(String fieldAssignment, String value, boolean optional, String findExtraString,
       String fieldName) {
     if(!optional) {
-      findExtraString = "if (getIntent().hasExtra(" + value + ")) { "+ fieldAssignment + findExtraString + "; } else { throw new RuntimeException(\"Field " + fieldName +"is not optional and is not present in extras.\");}";
+      findExtraString = "if (getIntent().hasExtra(" + value + ")) { "+ fieldAssignment + findExtraString + "; } else { throw new RuntimeException(\"Field " + fieldName +" is not optional and is not present in extras.\");}";
     }
     return findExtraString;
   }
