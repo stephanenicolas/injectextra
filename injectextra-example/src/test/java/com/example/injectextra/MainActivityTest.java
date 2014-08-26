@@ -1,5 +1,6 @@
 package com.example.injectextra;
 
+import android.content.Intent;
 import android.os.Bundle;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +17,9 @@ public class MainActivityTest {
 
   @Test
   public void shouldInjectExtra() {
-    Bundle bundle = new Bundle();
-    bundle.putString(SecondActivity.APP_NAME, "foo");
-    SecondActivity activity = Robolectric.buildActivity(SecondActivity.class).create(bundle).get();
+    Intent intent = new Intent();
+    intent.putExtra(SecondActivity.APP_NAME, "foo");
+    SecondActivity activity = Robolectric.buildActivity(SecondActivity.class).withIntent(intent).create().get();
     assertNotNull(activity.getView());
     assertThat(activity.getView().getText().toString(), is("foo"));
   }
