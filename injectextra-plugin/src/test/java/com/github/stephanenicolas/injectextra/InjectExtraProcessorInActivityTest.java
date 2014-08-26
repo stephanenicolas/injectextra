@@ -19,6 +19,7 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
   public static final String EXTRA_ID_BYTE = "EXTRA_ID_BYTE";
   public static final String EXTRA_ID_CHAR = "EXTRA_ID_CHAR";
+  public static final String EXTRA_ID_CHAR_SEQUENCE = "EXTRA_ID_CHAR_SEQUENCE";
   public static final String EXTRA_ID_BYTE_ARRAY = "EXTRA_ID_BYTE_ARRAY";
   public static final String EXTRA_ID_CHAR_ARRAY = "EXTRA_ID_CHAR_ARRAY";
   public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
@@ -32,6 +33,7 @@ public class InjectExtraProcessorInActivityTest {
     intent.putExtra(EXTRA_ID_BOOLEAN, true);
     intent.putExtra(EXTRA_ID_BYTE, (byte)22);
     intent.putExtra(EXTRA_ID_CHAR, 'a');
+    intent.putExtra(EXTRA_ID_CHAR_SEQUENCE, (CharSequence) new StringBuffer("foo"));
     intent.putExtra(EXTRA_ID_STRING_ARRAY, new String[] { "foo", "bar" });
     intent.putExtra(EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
     intent.putExtra(EXTRA_ID_CHAR_ARRAY, new char[] {'a'});
@@ -49,6 +51,7 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.byteB, is(intent.getByteExtra(EXTRA_ID_BYTE, (byte)1)));
     assertThat(activity.charA, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
     assertThat(activity.charB, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
+    assertThat(activity.charSeq, is(intent.getCharSequenceExtra(EXTRA_ID_CHAR_SEQUENCE)));
     assertThat(activity.arrayA, is(intent.getStringArrayExtra(EXTRA_ID_STRING_ARRAY)));
     assertThat(activity.arrayB, is(intent.getIntArrayExtra(EXTRA_ID_INTEGER_ARRAY)));
     assertThat(activity.arrayC, is(intent.getCharArrayExtra(EXTRA_ID_CHAR_ARRAY)));
@@ -95,6 +98,8 @@ public class InjectExtraProcessorInActivityTest {
     protected char charA;
     @InjectExtra(EXTRA_ID_CHAR)
     protected Character charB;
+    @InjectExtra(EXTRA_ID_CHAR_SEQUENCE)
+    protected CharSequence charSeq;
     @InjectExtra(EXTRA_ID_STRING_ARRAY)
     protected String[] arrayA;
     @InjectExtra(EXTRA_ID_INTEGER_ARRAY)
