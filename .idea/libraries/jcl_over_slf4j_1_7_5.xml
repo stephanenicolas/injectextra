@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jcl-over-slf4j-1.7.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2650hq37qpph364ivk299q86gl/gradle-1.12/lib/jcl-over-slf4j-1.7.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="javassist-plugin-0.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.darylteo.gradle/javassist-plugin/0.3.0/bd4a8661ba2cf59117453ad4a1370c9f062512d5/javassist-plugin-0.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.darylteo.gradle/javassist-plugin/0.3.0/f3618a2d1ed765a47ffb80e131b7c78806d46fef/javassist-plugin-0.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

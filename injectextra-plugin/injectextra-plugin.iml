@@ -17,12 +17,12 @@
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/groovy" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/groovy" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/extras" type="java-extra" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/extras" type="java-test-extra" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
@@ -34,8 +34,6 @@
     <orderEntry type="library" exported="" name="morpheus-plugin-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="lombok-1.14.2" level="project" />
     <orderEntry type="library" exported="" name="android-4.4.2_r2" level="project" />
-    <orderEntry type="library" exported="" name="httpclient-4.1.1" level="project" />
-    <orderEntry type="library" exported="" name="commons-logging-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="javassist-3.18.2-GA" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.7" level="project" />
     <orderEntry type="library" exported="" name="annotations-1.0.0" level="project" />
@@ -48,7 +46,9 @@
     <orderEntry type="library" exported="" name="proguard-gradle-4.11" level="project" />
     <orderEntry type="library" exported="" name="ecj-4.2.2" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.1" level="project" />
+    <orderEntry type="library" exported="" name="commons-logging-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="commons-codec-1.4" level="project" />
+    <orderEntry type="library" exported="" name="httpclient-4.1.1" level="project" />
     <orderEntry type="library" exported="" name="guava-15.0" level="project" />
     <orderEntry type="library" exported="" name="common-23.0.2" level="project" />
     <orderEntry type="library" exported="" name="kxml2-2.3.0" level="project" />
@@ -59,8 +59,11 @@
     <orderEntry type="library" exported="" name="sdklib-23.0.2" level="project" />
     <orderEntry type="library" exported="" name="sdk-common-23.0.2" level="project" />
     <orderEntry type="library" exported="" name="builder-model-0.12.2" level="project" />
+    <orderEntry type="library" exported="" name="asm-4.0" level="project" />
     <orderEntry type="library" exported="" name="lombok-ast-0.2.2" level="project" />
+    <orderEntry type="library" exported="" name="asm-tree-4.0" level="project" />
     <orderEntry type="library" exported="" name="lint-api-23.0.2" level="project" />
+    <orderEntry type="library" exported="" name="asm-analysis-4.0" level="project" />
     <orderEntry type="library" exported="" name="lint-checks-23.0.2" level="project" />
     <orderEntry type="library" exported="" name="lint-23.0.2" level="project" />
     <orderEntry type="library" exported="" name="ddmlib-23.0.2" level="project" />
@@ -108,7 +111,7 @@
     <orderEntry type="library" exported="" name="gradle-docs-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-base-services-groovy-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-base-services-1.12" level="project" />
-    <orderEntry type="library" exported="" name="gradle-extras-1.12" level="project" />
+    <orderEntry type="library" exported="" name="gradle-resources-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-cli-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-native-1.12" level="project" />
     <orderEntry type="library" exported="" name="jna-3.2.7" level="project" />
@@ -216,9 +219,6 @@
     <orderEntry type="library" exported="" name="gradle-build-init-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-language-jvm-1.12" level="project" />
     <orderEntry type="library" exported="" name="gradle-language-base-1.12" level="project" />
-    <orderEntry type="library" exported="" name="asm-4.0" level="project" />
-    <orderEntry type="library" exported="" name="asm-tree-4.0" level="project" />
-    <orderEntry type="library" exported="" name="asm-analysis-4.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.11" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="bcprov-jdk15-1.46" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="robolectric-2.4-SNAPSHOT" level="project" />
