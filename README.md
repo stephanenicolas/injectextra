@@ -62,6 +62,5 @@ Thanks to
 
 ###TODO
 
-* [ ] Handle more types
-* [ ] CI + badge
+* [ ] CI + badge (depends on Robolectric fork)
 * [ ] coverage
