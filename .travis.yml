@@ -6,3 +6,7 @@ env:
 
 notifications:
   email: false
+
+after_success:
+- ./gradlew :inject-plugin:jacocoTestReport :inject-plugin:coveralls
+

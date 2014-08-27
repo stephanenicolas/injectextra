@@ -23,6 +23,7 @@ allprojects {
 
 apply plugin: 'maven'
 apply plugin: 'release'
+
 createReleaseTag.dependsOn ':injectextra-annotations:uploadArchives',
     ':injectextra-plugin:uploadArchives'
 
@@ -51,3 +52,4 @@ task installExample(type: Exec) {
   workingDir = project.file('injectextra-example')
   args = ['installDebug']
 }
+

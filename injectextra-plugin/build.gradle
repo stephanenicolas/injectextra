@@ -11,8 +11,12 @@ buildscript {
 
   dependencies {
     classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
+    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.3.0'
   }
 }
+
+apply plugin: 'jacoco'
+apply plugin: 'coveralls'
 
 repositories {
   mavenCentral()
@@ -115,5 +119,12 @@ install.dependsOn check
 tasks.withType(Test) {
   scanForTestClasses = false
   include "**/*Test.class"
+}
+
+jacocoTestReport {
+  reports {
+    xml.enabled = true // coveralls plugin depends on xml format report
+    html.enabled = true
+  }
 }
 
