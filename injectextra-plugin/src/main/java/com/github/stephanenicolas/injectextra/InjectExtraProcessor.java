@@ -2,8 +2,10 @@ package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcelable;
 import com.github.stephanenicolas.afterburner.AfterBurner;
 import com.github.stephanenicolas.afterburner.exception.AfterBurnerImpossibleException;
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -125,6 +127,10 @@ public class InjectExtraProcessor implements IClassTransformer {
       //please note that default values when reading extras are not used.
       if (isSubClass(classPool, field.getType(), String.class)) {
         findExtraString = "getIntent().getStringExtra(\"" + value + "\")";
+      } else if (isSubClass(classPool, field.getType(), Parcelable.class)) {
+        findExtraString = "getIntent().getParcelableExtra(\"" + value + "\")";
+      } else if (isSubClass(classPool, field.getType(), Serializable.class)) {
+        findExtraString = "getIntent().getSerializableExtra(\"" + value + "\")";
       } else if (field.getType().subtypeOf(CtClass.intType)) {
         findExtraString = "getIntent().getIntExtra(\"" + value + "\", -1)";
       } else if (isSubClass(classPool, field.getType(), Integer.class)) {
@@ -144,10 +150,11 @@ public class InjectExtraProcessor implements IClassTransformer {
       } else if (isCharSequenceArray(field, classPool)) {
         findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
       } else if (isArrayList(field, classPool)) {
-        //due to erasure, TODO
         findExtraString = "getIntent().getCharSequenceArrayListExtra(\"" + value + "\")";
       } else if (isStringArray(field, classPool)) {
         findExtraString = "getIntent().getStringArrayExtra(\"" + value + "\")";
+      } else if (isParcelableArray(field, classPool)) {
+        findExtraString = "getIntent().getParcelableArrayExtra(\"" + value + "\")";
       } else if (isIntArray(field)) {
         findExtraString = "getIntent().getIntArrayExtra(\"" + value + "\")";
       } else if (field.getType().subtypeOf(CtClass.booleanType)) {
@@ -269,6 +276,11 @@ public class InjectExtraProcessor implements IClassTransformer {
   private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {
     return field.getType().isArray() && isSubClass(classPool, field.getType().getComponentType(),
         String.class);
+  }
+
+  private boolean isParcelableArray(CtField field, ClassPool classPool) throws NotFoundException {
+    return field.getType().isArray() && isSubClass(classPool, field.getType().getComponentType(),
+        Parcelable.class);
   }
 
   private boolean isIntArray(CtField field) throws NotFoundException {

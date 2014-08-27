@@ -2,6 +2,9 @@ package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
+import android.os.Parcelable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +19,8 @@ import static org.junit.Assert.assertThat;
 @RunWith(InjectExtraTestRunner.class)
 public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
+  public static final String EXTRA_ID_PARCELABLE = "EXTRA_ID_PARCELABLE";
+  public static final String EXTRA_ID_SERIALIZABLE = "EXTRA_ID_SERIALIZABLE";
   public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
   public static final String EXTRA_ID_BOOLEAN = "EXTRA_ID_BOOLEAN";
   public static final String EXTRA_ID_BYTE = "EXTRA_ID_BYTE";
@@ -32,13 +37,17 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_DOUBLE_ARRAY = "EXTRA_ID_DOUBLE_ARRAY";
   public static final String EXTRA_ID_SHORT_ARRAY = "EXTRA_ID_SHORT_ARRAY";
   public static final String EXTRA_ID_CHAR_SEQUENCE_ARRAY = "EXTRA_ID_CHAR_SEQUENCE_ARRAY";
+  public static final String EXTRA_ID_PARCELABLE_ARRAY = "EXTRA_ID_PARCELABLE_ARRAY";
   public static final String EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST = "EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST";
   public static final String EXTRA_ID_STRING_ARRAY_LIST = "EXTRA_ID_STRING_ARRAY_LIST";
+  public static final String EXTRA_ID_PARCELABLE_ARRAY_LIST = "EXTRA_ID_PARCELABLE_ARRAY_LIST";
 
   @Test
   public void shouldInjectExtra_simple() {
     Intent intent = new Intent();
     intent.putExtra(EXTRA_ID_STRING, "foo");
+    intent.putExtra(EXTRA_ID_PARCELABLE, new Point());
+    intent.putExtra(EXTRA_ID_SERIALIZABLE, "foo");
     intent.putExtra(EXTRA_ID_INTEGER, 2);
     intent.putExtra(EXTRA_ID_BOOLEAN, true);
     intent.putExtra(EXTRA_ID_BYTE, (byte)22);
@@ -55,17 +64,23 @@ public class InjectExtraProcessorInActivityTest {
     intent.putExtra(EXTRA_ID_DOUBLE_ARRAY, new double[] {12.0});
     intent.putExtra(EXTRA_ID_SHORT_ARRAY, new short[] {(short)12f});
     intent.putExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY, new CharSequence[] {new StringBuffer("foo")});
+    intent.putExtra(EXTRA_ID_PARCELABLE_ARRAY, new Parcelable[] {new Point()});
     ArrayList<CharSequence> charSequenceArrayList = new ArrayList<>();
     charSequenceArrayList.add(new StringBuffer("foo"));
     intent.putExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST, charSequenceArrayList);
     ArrayList<String> stringArrayList = new ArrayList<>();
     stringArrayList.add(new String("foo"));
     intent.putExtra(EXTRA_ID_STRING_ARRAY_LIST, stringArrayList);
+    ArrayList<Parcelable> pointArrayList = new ArrayList<>();
+    pointArrayList.add(new Point());
+    intent.putExtra(EXTRA_ID_PARCELABLE_ARRAY_LIST, pointArrayList);
 
     System.out.println("Extras used for tests " + intent.getExtras().toString());
     TestActivity activity =
         Robolectric.buildActivity(TestActivity.class).withIntent(intent).create().get();
     assertThat(activity.string, is(intent.getStringExtra(EXTRA_ID_STRING)));
+    assertThat(activity.parcelable, is(intent.getParcelableExtra(EXTRA_ID_PARCELABLE)));
+    assertThat(activity.serializable, is(intent.getSerializableExtra(EXTRA_ID_SERIALIZABLE)));
     assertThat(activity.intA, is(intent.getIntExtra(EXTRA_ID_INTEGER, 1)));
     assertThat(activity.intB, is(intent.getIntExtra(EXTRA_ID_INTEGER, 1)));
     assertThat(activity.boolA, is(intent.getBooleanExtra(EXTRA_ID_BOOLEAN, false)));
@@ -91,9 +106,13 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.arrayShorts, is(intent.getShortArrayExtra(EXTRA_ID_SHORT_ARRAY)));
     assertThat(activity.arrayCharSequences, is(intent.getCharSequenceArrayExtra(
         EXTRA_ID_CHAR_SEQUENCE_ARRAY)));
+    assertThat(activity.arrayParcelables, is(intent.getParcelableArrayExtra(
+        EXTRA_ID_PARCELABLE_ARRAY)));
     assertThat(activity.listChatSequences, is(intent.getCharSequenceArrayListExtra(
         EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST)));
     assertThat(activity.listStrings, is(intent.getStringArrayListExtra(EXTRA_ID_STRING_ARRAY_LIST)));
+    assertThat(activity.listParcelables, is(intent.getParcelableArrayListExtra(
+        EXTRA_ID_PARCELABLE_ARRAY_LIST)));
   }
 
   @Test(expected = RuntimeException.class)
@@ -120,6 +139,10 @@ public class InjectExtraProcessorInActivityTest {
 
     @InjectExtra(EXTRA_ID_STRING)
     protected String string;
+    @InjectExtra(EXTRA_ID_PARCELABLE)
+    protected Parcelable parcelable;
+    @InjectExtra(EXTRA_ID_SERIALIZABLE)
+    protected Serializable serializable;
     @InjectExtra(EXTRA_ID_INTEGER)
     protected int intA;
     @InjectExtra(EXTRA_ID_INTEGER)
@@ -166,10 +189,16 @@ public class InjectExtraProcessorInActivityTest {
     protected short[] arrayShorts;
     @InjectExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY)
     protected CharSequence[] arrayCharSequences;
+    @InjectExtra(EXTRA_ID_STRING_ARRAY)
+    protected CharSequence[] arrayStrings;
+    @InjectExtra(EXTRA_ID_PARCELABLE_ARRAY)
+    protected Parcelable[] arrayParcelables;
     @InjectExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST)
     protected ArrayList<CharSequence> listChatSequences;
     @InjectExtra(EXTRA_ID_STRING_ARRAY_LIST)
     protected ArrayList<String> listStrings;
+    @InjectExtra(EXTRA_ID_PARCELABLE_ARRAY_LIST)
+    protected ArrayList<Parcelable> listParcelables;
   }
 
   public static class TestActivityOptional extends Activity {
