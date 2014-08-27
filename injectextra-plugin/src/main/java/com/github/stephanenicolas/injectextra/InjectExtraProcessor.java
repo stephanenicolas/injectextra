@@ -15,6 +15,8 @@ import javassist.CtField;
 import javassist.NotFoundException;
 import javassist.build.IClassTransformer;
 import javassist.build.JavassistBuildException;
+import javassist.bytecode.BadBytecode;
+import javassist.bytecode.SignatureAttribute;
 import lombok.extern.slf4j.Slf4j;
 
 import static java.lang.String.format;
@@ -141,7 +143,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getShortArrayExtra(\"" + value + "\")";
       } else if (isCharSequenceArray(field, classPool)) {
         findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
-      } else if (isCharSequenceArrayList(field, classPool)) {
+      } else if (isArrayList(field, classPool)) {
+        //due to erasure, TODO
         findExtraString = "getIntent().getCharSequenceArrayListExtra(\"" + value + "\")";
       } else if (isStringArray(field, classPool)) {
         findExtraString = "getIntent().getStringArrayExtra(\"" + value + "\")";
@@ -175,11 +178,9 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "new Character(getIntent().getCharExtra(\"" + value + "\", '\\u0000'))";
       } else if (isSubClass(classPool, field.getType(), CharSequence.class)) {
         findExtraString = "getIntent().getCharSequenceExtra(\"" + value + "\")";
-      } else if (isSubClass(classPool, field.getType(), Object.class)) {
-        findExtraString = "getIntent().get(\"" + value + "\")";
       } else {
         throw new NotFoundException(
-            format("InjectExtra doen't know how to inject field %s of type %s in %s",
+            format("InjectExtra doesn't know how to inject field %s of type %s in %s",
                 field.getName(), field.getType().getName(), targetClazz.getName()));
       }
       buffer.append(checkOptional(assignment, value, optional, findExtraString, fieldName));
@@ -261,9 +262,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         CharSequence.class);
   }
 
-  private boolean isCharSequenceArrayList(CtField field, ClassPool classPool) throws NotFoundException {
-    System.out.println("Generic signature of charsequence arraylist");
-    return isSubClass(classPool, field.getType(), ArrayList.class) && field.getType().getGenericSignature().equals("");
+  private boolean isArrayList(CtField field, ClassPool classPool) throws NotFoundException {
+    return isSubClass(classPool, field.getType(), ArrayList.class);
   }
 
   private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {

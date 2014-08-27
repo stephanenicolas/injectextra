@@ -2,6 +2,7 @@ package com.github.stephanenicolas.injectextra;
 
 import android.app.Activity;
 import android.content.Intent;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -30,6 +31,8 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_FLOAT_ARRAY = "EXTRA_ID_FLOAT_ARRAY";
   public static final String EXTRA_ID_DOUBLE_ARRAY = "EXTRA_ID_DOUBLE_ARRAY";
   public static final String EXTRA_ID_SHORT_ARRAY = "EXTRA_ID_SHORT_ARRAY";
+  public static final String EXTRA_ID_CHAR_SEQUENCE_ARRAY = "EXTRA_ID_CHAR_SEQUENCE_ARRAY";
+  public static final String EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST = "EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST";
 
 
   @Test
@@ -48,9 +51,13 @@ public class InjectExtraProcessorInActivityTest {
     intent.putExtra(EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
     intent.putExtra(EXTRA_ID_CHAR_ARRAY, new char[] {'a'});
     intent.putExtra(EXTRA_ID_BYTE_ARRAY, new byte[] {(byte)2});
-    intent.putExtra(EXTRA_ID_FLOAT_ARRAY, new float[] {(float)12f});
+    intent.putExtra(EXTRA_ID_FLOAT_ARRAY, new float[] {12f});
     intent.putExtra(EXTRA_ID_DOUBLE_ARRAY, new double[] {12.0});
     intent.putExtra(EXTRA_ID_SHORT_ARRAY, new short[] {(short)12f});
+    intent.putExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY, new CharSequence[] {new StringBuffer("foo")});
+    ArrayList<CharSequence> charSequenceArrayList = new ArrayList<>();
+    charSequenceArrayList.add(new StringBuffer("foo"));
+    intent.putExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST, charSequenceArrayList);
 
     System.out.println("Extras used for tests " + intent.getExtras().toString());
     TestActivity activity =
@@ -65,16 +72,12 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.charA, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
     assertThat(activity.charB, is(intent.getCharExtra(EXTRA_ID_CHAR, '\u0000')));
     assertThat(activity.charSeq, is(intent.getCharSequenceExtra(EXTRA_ID_CHAR_SEQUENCE)));
-
-
-    //TODO from charSequence array and lists.
-
     assertThat(activity.floatA, is(intent.getFloatExtra(EXTRA_ID_FLOAT, 12f)));
     assertThat(activity.floatB, is(intent.getFloatExtra(EXTRA_ID_FLOAT, 12f)));
     assertThat(activity.doubleA, is(intent.getDoubleExtra(EXTRA_ID_DOUBLE, 12.0)));
     assertThat(activity.doubleB, is(intent.getDoubleExtra(EXTRA_ID_DOUBLE, 12.0)));
-    assertThat(activity.shortA, is(intent.getShortExtra(EXTRA_ID_SHORT, (short)12)));
-    assertThat(activity.shortB, is(intent.getShortExtra(EXTRA_ID_SHORT, (short)12)));
+    assertThat(activity.shortA, is(intent.getShortExtra(EXTRA_ID_SHORT, (short) 12)));
+    assertThat(activity.shortB, is(intent.getShortExtra(EXTRA_ID_SHORT, (short) 12)));
 
     assertThat(activity.arrayString, is(intent.getStringArrayExtra(EXTRA_ID_STRING_ARRAY)));
     assertThat(activity.arrayInteger, is(intent.getIntArrayExtra(EXTRA_ID_INTEGER_ARRAY)));
@@ -83,6 +86,8 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.arrayFloats, is(intent.getFloatArrayExtra(EXTRA_ID_FLOAT_ARRAY)));
     assertThat(activity.arrayDoubles, is(intent.getDoubleArrayExtra(EXTRA_ID_DOUBLE_ARRAY)));
     assertThat(activity.arrayShorts, is(intent.getShortArrayExtra(EXTRA_ID_SHORT_ARRAY)));
+    assertThat(activity.arrayCharSequences, is(intent.getCharSequenceArrayExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY)));
+    assertThat(activity.listChatSequences, is(intent.getCharSequenceArrayListExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST)));
   }
 
   @Test(expected = RuntimeException.class)
@@ -153,6 +158,10 @@ public class InjectExtraProcessorInActivityTest {
     protected double[] arrayDoubles;
     @InjectExtra(EXTRA_ID_SHORT_ARRAY)
     protected short[] arrayShorts;
+    @InjectExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY)
+    protected CharSequence[] arrayCharSequences;
+    @InjectExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST)
+    protected ArrayList<CharSequence> listChatSequences;
   }
 
   public static class TestActivityOptional extends Activity {
