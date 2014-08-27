@@ -26,6 +26,7 @@ env:
 notifications:
   email: false
 
+#from http://blog.ansuz.nl/index.php/2014/06/01/robolectric-and-cobertura-with-gradle/
 after_success:
     - ./gradlew clean cobertura -x generateCoberturaReport
     - ./gradlew cobertura -x instrument -x copyCoberturaDatafile :inject-plugin:coveralls

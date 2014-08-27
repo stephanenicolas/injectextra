@@ -3,6 +3,7 @@ package com.github.stephanenicolas.injectextra;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(InjectExtraTestRunner.class)
 public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_STRING = "EXTRA_ID_STRING";
+  public static final String EXTRA_ID_BUNDLE = "EXTRA_ID_BUNDLE";
   public static final String EXTRA_ID_PARCELABLE = "EXTRA_ID_PARCELABLE";
   public static final String EXTRA_ID_SERIALIZABLE = "EXTRA_ID_SERIALIZABLE";
   public static final String EXTRA_ID_INTEGER = "EXTRA_ID_INTEGER";
@@ -29,6 +31,7 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_FLOAT = "EXTRA_ID_FLOAT";
   public static final String EXTRA_ID_DOUBLE = "EXTRA_ID_DOUBLE";
   public static final String EXTRA_ID_SHORT = "EXTRA_ID_SHORT";
+  public static final String EXTRA_ID_BOOL_ARRAY = "EXTRA_ID_BOOL_ARRAY";
   public static final String EXTRA_ID_BYTE_ARRAY = "EXTRA_ID_BYTE_ARRAY";
   public static final String EXTRA_ID_CHAR_ARRAY = "EXTRA_ID_CHAR_ARRAY";
   public static final String EXTRA_ID_STRING_ARRAY = "EXTRA_ID_STRING_ARRAY";
@@ -46,6 +49,7 @@ public class InjectExtraProcessorInActivityTest {
   public void shouldInjectExtra_simple() {
     Intent intent = new Intent();
     intent.putExtra(EXTRA_ID_STRING, "foo");
+    intent.putExtra(EXTRA_ID_BUNDLE, new Bundle());
     intent.putExtra(EXTRA_ID_PARCELABLE, new Point());
     intent.putExtra(EXTRA_ID_SERIALIZABLE, "foo");
     intent.putExtra(EXTRA_ID_INTEGER, 2);
@@ -56,6 +60,7 @@ public class InjectExtraProcessorInActivityTest {
     intent.putExtra(EXTRA_ID_FLOAT, 12f);
     intent.putExtra(EXTRA_ID_DOUBLE, 12.0);
     intent.putExtra(EXTRA_ID_SHORT, (short)12);
+    intent.putExtra(EXTRA_ID_BOOL_ARRAY, new boolean[] {false});
     intent.putExtra(EXTRA_ID_STRING_ARRAY, new String[] { "foo", "bar" });
     intent.putExtra(EXTRA_ID_INTEGER_ARRAY, new int[] { 2, 3 });
     intent.putExtra(EXTRA_ID_CHAR_ARRAY, new char[] {'a'});
@@ -79,6 +84,7 @@ public class InjectExtraProcessorInActivityTest {
     TestActivity activity =
         Robolectric.buildActivity(TestActivity.class).withIntent(intent).create().get();
     assertThat(activity.string, is(intent.getStringExtra(EXTRA_ID_STRING)));
+    assertThat(activity.bundle, is(intent.getBundleExtra(EXTRA_ID_BUNDLE)));
     assertThat(activity.parcelable, is(intent.getParcelableExtra(EXTRA_ID_PARCELABLE)));
     assertThat(activity.serializable, is(intent.getSerializableExtra(EXTRA_ID_SERIALIZABLE)));
     assertThat(activity.intA, is(intent.getIntExtra(EXTRA_ID_INTEGER, 1)));
@@ -97,6 +103,7 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.shortA, is(intent.getShortExtra(EXTRA_ID_SHORT, (short) 12)));
     assertThat(activity.shortB, is(intent.getShortExtra(EXTRA_ID_SHORT, (short) 12)));
 
+    assertThat(activity.arrayBooleans, is(intent.getBooleanArrayExtra(EXTRA_ID_BOOL_ARRAY)));
     assertThat(activity.arrayString, is(intent.getStringArrayExtra(EXTRA_ID_STRING_ARRAY)));
     assertThat(activity.arrayInteger, is(intent.getIntArrayExtra(EXTRA_ID_INTEGER_ARRAY)));
     assertThat(activity.arrayChars, is(intent.getCharArrayExtra(EXTRA_ID_CHAR_ARRAY)));
@@ -135,10 +142,17 @@ public class InjectExtraProcessorInActivityTest {
     Robolectric.buildActivity(TestActivityNullable.class).create().get();
   }
 
+  @Test(expected = RuntimeException.class)
+  public void shouldInjectExtra_badExtra() {
+    Robolectric.buildActivity(TestActivityWithBadExtra.class).create().get();
+  }
+
   public static class TestActivity extends Activity {
 
     @InjectExtra(EXTRA_ID_STRING)
     protected String string;
+    @InjectExtra(EXTRA_ID_BUNDLE)
+    protected Bundle bundle;
     @InjectExtra(EXTRA_ID_PARCELABLE)
     protected Parcelable parcelable;
     @InjectExtra(EXTRA_ID_SERIALIZABLE)
@@ -173,6 +187,8 @@ public class InjectExtraProcessorInActivityTest {
     public short shortA;
     @InjectExtra(EXTRA_ID_SHORT)
     public Short shortB;
+    @InjectExtra(EXTRA_ID_BOOL_ARRAY)
+    protected boolean[] arrayBooleans;
     @InjectExtra(EXTRA_ID_STRING_ARRAY)
     protected String[] arrayString;
     @InjectExtra(EXTRA_ID_INTEGER_ARRAY)
@@ -253,5 +269,12 @@ public class InjectExtraProcessorInActivityTest {
     protected int[] arrayB;
   }
 
+  public static class TestActivityWithBadExtra extends Activity {
+    @InjectExtra(value = EXTRA_ID_STRING, optional = true)
+    protected BadExtra badExtra;
+  }
+
   public static @interface Nullable {}
+
+  public static class BadExtra {}
 }

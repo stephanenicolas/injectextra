@@ -117,7 +117,7 @@ public class InjectExtraProcessor implements IClassTransformer {
         method = annotionClass.getMethod("optional");
         optional = (boolean) method.invoke(annotation);
       } catch (Exception e) {
-        log.debug("Exception thrown during parsing of InjectExtra annotation", e);
+        log.debug("How did we get there ?", e);
       }
 
       String assignment = field.getName() + " = ";
@@ -137,6 +137,8 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "new Integer(getIntent().getIntExtra(\"" + value + "\", -1))";
       } else if (isBoolArray(field)) {
         findExtraString = "getIntent().getBooleanArrayExtra(\"" + value + "\")";
+      } else if (isIntArray(field)) {
+        findExtraString = "getIntent().getIntArrayExtra(\"" + value + "\")";
       } else if (isByteArray(field)) {
         findExtraString = "getIntent().getByteArrayExtra(\"" + value + "\")";
       } else if (isCharArray(field)) {
@@ -155,8 +157,6 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getStringArrayExtra(\"" + value + "\")";
       } else if (isParcelableArray(field, classPool)) {
         findExtraString = "getIntent().getParcelableArrayExtra(\"" + value + "\")";
-      } else if (isIntArray(field)) {
-        findExtraString = "getIntent().getIntArrayExtra(\"" + value + "\")";
       } else if (field.getType().subtypeOf(CtClass.booleanType)) {
         findExtraString = "getIntent().getBooleanExtra(\"" + value + "\", false)";
       } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
@@ -290,16 +290,12 @@ public class InjectExtraProcessor implements IClassTransformer {
   }
 
   //extension point for new classes
-  private boolean isValidClass(CtClass clazz) {
+  private boolean isValidClass(CtClass clazz) throws NotFoundException {
     return isActivity(clazz);
   }
 
-  private boolean isActivity(CtClass clazz) {
-    try {
-      return isSubClass(clazz.getClassPool(), clazz, Activity.class);
-    } catch (NotFoundException e) {
-      throw new RuntimeException(e);
-    }
+  private boolean isActivity(CtClass clazz) throws NotFoundException {
+    return isSubClass(clazz.getClassPool(), clazz, Activity.class);
   }
 
   private boolean isSubClass(ClassPool classPool, CtClass clazz, Class<?> superClass)
