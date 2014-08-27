@@ -127,5 +127,6 @@ tasks.withType(Test) {
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 cobertura.auxiliaryClasspath += project.files('../injectextra-annotations/build/classes/')
 cobertura.coverageExcludes += ".*com.github.stephanenicolas.injectextra.Nullable"
+cobertura.coverageIncludes += ".*com.github.stephanenicolas.injectextra.InjectExtraProcessor"
 
 
