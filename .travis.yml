@@ -1,8 +1,5 @@
 language: java
 jdk: oraclejdk7
-env:
-  global:
-    - COVERALLS_REPO_TOKEN=EFAY4CmHwGysXTZTnQTegsVOoJxgMkJ5z
 branches:
   only:
     - master
