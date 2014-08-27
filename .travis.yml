@@ -14,10 +14,10 @@ before_install:
 
 install:
     # Without TERM=dumb, we get mangled output in the Travis console
-    - TERM=dumb ./gradlew clean assemble -PdisablePreDex
+    - TERM=dumb ./gradlew clean assemble -PdisablePreDex -d
 
 script:
-    - TERM=dumb ./gradlew check -PdisablePreDex
+    - TERM=dumb ./gradlew check -PdisablePreDex -d
 
 env:
   global:
