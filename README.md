@@ -25,13 +25,11 @@ public class SecondActivity extends Activity {
   @InjectExtra(APP_NAME)
   private String appName;
 
-  private TextView view;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    view = (TextView) findViewById(R.id.textview_hello);
+    TextView view = (TextView) findViewById(R.id.textview_hello);
     view.setText("Injected :" + appName);
   }
 }
