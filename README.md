@@ -1,4 +1,4 @@
-InjectExtra [![Travis Build](https://travis-ci.org/stephanenicolas/injectextra.svg?branch=master)](https://travis-ci.org/stephanenicolas/injectextra) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.injectextra/injectextra-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.injectextra/injectextra-plugin)
+InjectExtra [[![Coverage Status](https://img.shields.io/coveralls/stephanenicolas/injectextra.svg)](https://coveralls.io/r/stephanenicolas/injectextra) ![Travis Build](https://travis-ci.org/stephanenicolas/injectextra.svg?branch=master)](https://travis-ci.org/stephanenicolas/injectextra) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.injectextra/injectextra-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.stephanenicolas.injectextra/injectextra-plugin)
 ==========
 
 ***Injects everything passed by extra to an activity automatically.***
