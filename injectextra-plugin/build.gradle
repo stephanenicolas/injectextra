@@ -19,6 +19,13 @@ repositories {
 
   //only needed to develop the lib
   mavenLocal()
+
+  //for robolectric fork
+  repositories {
+    flatDir {
+      dirs 'libs'
+    }
+  }
 }
 
 dependencies {
