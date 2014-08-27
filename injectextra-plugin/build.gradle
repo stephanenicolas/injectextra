@@ -10,9 +10,9 @@ buildscript {
   }
 
   dependencies {
-    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
-    classpath 'net.saliman:gradle-cobertura-plugin:2.2.4' // cobertura plugin
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
+    classpath ("org.gradle.api.plugins:gradle-nexus-plugin:0.7")
+    classpath ("net.saliman:gradle-cobertura-plugin:2.2.4")
+    classpath ("org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2")
   }
 }
 
@@ -39,9 +39,7 @@ dependencies {
   compile 'com.github.stephanenicolas.afterburner:afterburner-library:1.0.1'
 
   //only needed to create a plugin
-  compile 'com.github.stephanenicolas.morpheus:morpheus-plugin:1.0.1'
-  compile 'org.apache.httpcomponents:httpclient:4.3'
-  compile 'org.apache.httpcomponents:httpmime:4.3'
+  compile ("com.github.stephanenicolas.morpheus:morpheus-plugin:1.0.1")
   compile gradleApi()
   compile localGroovy()
 
@@ -49,7 +47,7 @@ dependencies {
 
 
   compile 'org.projectlombok:lombok:1.14.2'
-  compile 'com.google.android:android:4.1.1.4'
+  compile ("com.google.android:android:4.1.1.4")
 
   //--TESTS
   testCompile 'junit:junit:4.11'
@@ -78,6 +76,7 @@ dependencies {
     exclude group: 'com.google.android'
   }
   testCompile("org.apache.httpcomponents:httpclient:$HTTP_CLIENT_VERSION")
+  testCompile("org.apache.httpcomponents:httpmime:$HTTP_CLIENT_VERSION")
   testCompile("commons-logging:commons-logging:$COMMONS_LOGGING_VERSION")
   testCompile("com.google.android:android-test:$ANDROID_TEST_VERSION")
   testCompile "org.easymock:easymock:$EASY_MOCK_VERSION"
@@ -124,5 +123,4 @@ tasks.withType(Test) {
 
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 cobertura.auxiliaryClasspath += project.files('../injectextra-annotations/build/classes/')
-cobertura.coverageIncludes += ".*com.github.stephanenicolas.injectextra.InjectExtraProcessor"
-
+cobertura.coverageIncludes = ['.*com.github.stephanenicolas.injectextra.InjectExtraProcessor']
