@@ -40,6 +40,7 @@ dependencies {
 
   //only needed to create a plugin
   compile 'com.github.stephanenicolas.morpheus:morpheus-plugin:1.0.1'
+  compile 'org.apache.httpcomponents:httpclient:4.3'
   compile gradleApi()
   compile localGroovy()
 
