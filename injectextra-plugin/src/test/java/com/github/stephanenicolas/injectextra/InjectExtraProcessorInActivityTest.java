@@ -33,7 +33,7 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_SHORT_ARRAY = "EXTRA_ID_SHORT_ARRAY";
   public static final String EXTRA_ID_CHAR_SEQUENCE_ARRAY = "EXTRA_ID_CHAR_SEQUENCE_ARRAY";
   public static final String EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST = "EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST";
-
+  public static final String EXTRA_ID_STRING_ARRAY_LIST = "EXTRA_ID_STRING_ARRAY_LIST";
 
   @Test
   public void shouldInjectExtra_simple() {
@@ -58,6 +58,9 @@ public class InjectExtraProcessorInActivityTest {
     ArrayList<CharSequence> charSequenceArrayList = new ArrayList<>();
     charSequenceArrayList.add(new StringBuffer("foo"));
     intent.putExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST, charSequenceArrayList);
+    ArrayList<String> stringArrayList = new ArrayList<>();
+    stringArrayList.add(new String("foo"));
+    intent.putExtra(EXTRA_ID_STRING_ARRAY_LIST, stringArrayList);
 
     System.out.println("Extras used for tests " + intent.getExtras().toString());
     TestActivity activity =
@@ -86,8 +89,11 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.arrayFloats, is(intent.getFloatArrayExtra(EXTRA_ID_FLOAT_ARRAY)));
     assertThat(activity.arrayDoubles, is(intent.getDoubleArrayExtra(EXTRA_ID_DOUBLE_ARRAY)));
     assertThat(activity.arrayShorts, is(intent.getShortArrayExtra(EXTRA_ID_SHORT_ARRAY)));
-    assertThat(activity.arrayCharSequences, is(intent.getCharSequenceArrayExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY)));
-    assertThat(activity.listChatSequences, is(intent.getCharSequenceArrayListExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST)));
+    assertThat(activity.arrayCharSequences, is(intent.getCharSequenceArrayExtra(
+        EXTRA_ID_CHAR_SEQUENCE_ARRAY)));
+    assertThat(activity.listChatSequences, is(intent.getCharSequenceArrayListExtra(
+        EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST)));
+    assertThat(activity.listStrings, is(intent.getStringArrayListExtra(EXTRA_ID_STRING_ARRAY_LIST)));
   }
 
   @Test(expected = RuntimeException.class)
@@ -162,6 +168,8 @@ public class InjectExtraProcessorInActivityTest {
     protected CharSequence[] arrayCharSequences;
     @InjectExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST)
     protected ArrayList<CharSequence> listChatSequences;
+    @InjectExtra(EXTRA_ID_STRING_ARRAY_LIST)
+    protected ArrayList<String> listStrings;
   }
 
   public static class TestActivityOptional extends Activity {
