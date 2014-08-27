@@ -58,6 +58,15 @@ Thanks to
 * [morpheus](https://github.com/stephanenicolas/morpheus), byte code weaver for android.
 * [AfterBurner](https://github.com/stephanenicolas/afterburner), byte code weaving swiss army knife for Android.
 
+### Related projects 
+
+On the same principle of byte code weaving : 
+
+* [InjectView](https://github.com/stephanenicolas/injectview)
+* [InjectResource](https://github.com/stephanenicolas/injectresource)
+* [LogLifeCycle](https://github.com/stephanenicolas/loglifecycle)
+* [Hugo](https://github.com/jakewharton/hugo)
+
 ###TODO
 
 * [ ] CI + badge (depends on Robolectric fork)
