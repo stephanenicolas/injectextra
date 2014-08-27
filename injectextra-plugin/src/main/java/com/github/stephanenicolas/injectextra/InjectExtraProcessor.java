@@ -135,6 +135,10 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getCharArrayExtra(\"" + value + "\")";
       } else if (isFloatArray(field)) {
         findExtraString = "getIntent().getFloatArrayExtra(\"" + value + "\")";
+      } else if (isDoubleArray(field)) {
+        findExtraString = "getIntent().getDoubleArrayExtra(\"" + value + "\")";
+      } else if (isShortArray(field)) {
+        findExtraString = "getIntent().getShortArrayExtra(\"" + value + "\")";
       } else if (isCharSequenceArray(field, classPool)) {
         findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
       } else if (isCharSequenceArrayList(field, classPool)) {
@@ -159,6 +163,14 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getFloatExtra(\"" + value + "\", -1f)";
       } else if (isSubClass(classPool, field.getType(), Float.class)) {
         findExtraString = "new Float(getIntent().getFloatExtra(\"" + value + "\", (float)-1f))";
+      } else if (field.getType().subtypeOf(CtClass.shortType)) {
+        findExtraString = "getIntent().getShortExtra(\"" + value + "\", (short)1)";
+      } else if (isSubClass(classPool, field.getType(), Short.class)) {
+        findExtraString = "new Short(getIntent().getShortExtra(\"" + value + "\", (short)1))";
+      } else if (field.getType().subtypeOf(CtClass.doubleType)) {
+        findExtraString = "getIntent().getDoubleExtra(\"" + value + "\", 1.0)";
+      } else if (isSubClass(classPool, field.getType(), Double.class)) {
+        findExtraString = "new Double(getIntent().getDoubleExtra(\"" + value + "\", 1.0))";
       } else if (isSubClass(classPool, field.getType(), Character.class)) {
         findExtraString = "new Character(getIntent().getCharExtra(\"" + value + "\", '\\u0000'))";
       } else if (isSubClass(classPool, field.getType(), CharSequence.class)) {
@@ -230,6 +242,18 @@ public class InjectExtraProcessor implements IClassTransformer {
     return field.getType().isArray() && field.getType()
         .getComponentType()
         .subtypeOf(CtClass.floatType);
+  }
+
+  private boolean isDoubleArray(CtField field) throws NotFoundException {
+    return field.getType().isArray() && field.getType()
+        .getComponentType()
+        .subtypeOf(CtClass.doubleType);
+  }
+
+  private boolean isShortArray(CtField field) throws NotFoundException {
+    return field.getType().isArray() && field.getType()
+        .getComponentType()
+        .subtypeOf(CtClass.shortType);
   }
 
   private boolean isCharSequenceArray(CtField field, ClassPool classPool) throws NotFoundException {
