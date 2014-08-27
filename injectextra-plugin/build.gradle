@@ -13,7 +13,6 @@ buildscript {
     classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
     classpath 'net.saliman:gradle-cobertura-plugin:2.2.4' // cobertura plugin
     classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
-    classpath 'org.apache.httpcomponents:httpmime:4.3'
   }
 }
 
@@ -80,7 +79,6 @@ dependencies {
   testCompile("commons-logging:commons-logging:$COMMONS_LOGGING_VERSION")
   testCompile("com.google.android:android-test:$ANDROID_TEST_VERSION")
   testCompile "org.easymock:easymock:$EASY_MOCK_VERSION"
-  testCompile 'org.apache.httpcomponents:httpmime:4.3'
 }
 
 modifyPom {
