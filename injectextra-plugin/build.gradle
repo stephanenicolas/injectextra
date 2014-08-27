@@ -123,5 +123,4 @@ tasks.withType(Test) {
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 cobertura.auxiliaryClasspath += project.files('../injectextra-annotations/build/classes/')
 cobertura.coverageIncludes += ".*com.github.stephanenicolas.injectextra.InjectExtraProcessor"
-coveralls.coberturaReportPath = 'inject-plugin/build/reports/cobertura/coverage.xml'
 
