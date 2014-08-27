@@ -11,7 +11,7 @@ buildscript {
 
   dependencies {
     classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
-    classpath 'net.saliman:gradle-cobertura-plugin:2.0.0' // cobertura plugin
+    classpath 'net.saliman:gradle-cobertura-plugin:2.2.4' // cobertura plugin
     classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
   }
 }
@@ -26,10 +26,12 @@ repositories {
   mavenLocal()
 
   //for robolectric fork
-  repositories {
-    flatDir {
-      dirs 'libs'
-    }
+  flatDir {
+    dirs 'libs'
+  }
+
+  maven {
+    url 'maven_3rd_party'
   }
 }
 
@@ -123,4 +125,7 @@ tasks.withType(Test) {
 }
 
 cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
+cobertura.auxiliaryClasspath += project.files('../injectextra-annotations/build/classes/')
+cobertura.coverageExcludes += ".*com.github.stephanenicolas.injectextra.Nullable"
+
 
