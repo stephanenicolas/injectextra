@@ -75,8 +75,6 @@ dependencies {
     exclude module: 'httpclient'
     exclude group: 'com.google.android'
   }
-  testCompile("org.apache.httpcomponents:httpclient:$HTTP_CLIENT_VERSION")
-  testCompile("org.apache.httpcomponents:httpmime:$HTTP_CLIENT_VERSION")
   testCompile("commons-logging:commons-logging:$COMMONS_LOGGING_VERSION")
   testCompile("com.google.android:android-test:$ANDROID_TEST_VERSION")
   testCompile "org.easymock:easymock:$EASY_MOCK_VERSION"
