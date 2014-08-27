@@ -1,4 +1,4 @@
-version 1.0.2 (August 26th 2014)
+version 1.0.3 (August 27th 2014)
 -------------
 
 * Support for all classes passed as extras
