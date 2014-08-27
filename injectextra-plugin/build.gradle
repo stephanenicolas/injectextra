@@ -11,12 +11,13 @@ buildscript {
 
   dependencies {
     classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7'
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.3.0'
+    classpath 'net.saliman:gradle-cobertura-plugin:2.0.0' // cobertura plugin
+    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:1.0.2'
   }
 }
 
-apply plugin: 'jacoco'
-apply plugin: 'coveralls'
+apply plugin: 'cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
 
 repositories {
   mavenCentral()
@@ -121,10 +122,5 @@ tasks.withType(Test) {
   include "**/*Test.class"
 }
 
-jacocoTestReport {
-  reports {
-    xml.enabled = true // coveralls plugin depends on xml format report
-    html.enabled = true
-  }
-}
+cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
