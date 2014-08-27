@@ -69,4 +69,5 @@ On the same principle of byte code weaving :
 
 ### CI 
 
+[![Travis Build](https://travis-ci.org/stephanenicolas/injectextra.svg?branch=master)](https://travis-ci.org/stephanenicolas/injectextra)
 [![Coverage Status](https://img.shields.io/coveralls/stephanenicolas/injectextra.svg)](https://coveralls.io/r/stephanenicolas/injectextra)
