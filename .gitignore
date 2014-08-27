@@ -20,7 +20,3 @@ local.properties
 .gradle
 build/
 
-#personal aliases
-example
-annotations
-plugin
