@@ -147,6 +147,11 @@ public class InjectExtraProcessorInActivityTest {
     Robolectric.buildActivity(TestActivityWithBadExtra.class).create().get();
   }
 
+  @Test(expected = RuntimeException.class)
+  public void shouldInjectExtra_badExtraArray() {
+    Robolectric.buildActivity(TestActivityWithBadExtraArray.class).create().get();
+  }
+
   public static class TestActivity extends Activity {
 
     @InjectExtra(EXTRA_ID_STRING)
@@ -272,6 +277,11 @@ public class InjectExtraProcessorInActivityTest {
   public static class TestActivityWithBadExtra extends Activity {
     @InjectExtra(value = EXTRA_ID_STRING, optional = true)
     protected BadExtra badExtra;
+  }
+
+  public static class TestActivityWithBadExtraArray extends Activity {
+    @InjectExtra(value = EXTRA_ID_STRING_ARRAY, optional = true)
+    protected BadExtra[] arrayBadExtras;
   }
 
   public static @interface Nullable {}

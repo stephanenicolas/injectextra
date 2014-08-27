@@ -17,8 +17,6 @@ import javassist.CtField;
 import javassist.NotFoundException;
 import javassist.build.IClassTransformer;
 import javassist.build.JavassistBuildException;
-import javassist.bytecode.BadBytecode;
-import javassist.bytecode.SignatureAttribute;
 import lombok.extern.slf4j.Slf4j;
 
 import static java.lang.String.format;
@@ -127,14 +125,10 @@ public class InjectExtraProcessor implements IClassTransformer {
       //please note that default values when reading extras are not used.
       if (isSubClass(classPool, field.getType(), String.class)) {
         findExtraString = "getIntent().getStringExtra(\"" + value + "\")";
-      } else if (isSubClass(classPool, field.getType(), Parcelable.class)) {
-        findExtraString = "getIntent().getParcelableExtra(\"" + value + "\")";
-      } else if (isSubClass(classPool, field.getType(), Serializable.class)) {
-        findExtraString = "getIntent().getSerializableExtra(\"" + value + "\")";
-      } else if (field.getType().subtypeOf(CtClass.intType)) {
-        findExtraString = "getIntent().getIntExtra(\"" + value + "\", -1)";
-      } else if (isSubClass(classPool, field.getType(), Integer.class)) {
-        findExtraString = "new Integer(getIntent().getIntExtra(\"" + value + "\", -1))";
+      } else if (isCharSequenceArray(field, classPool)) {
+        findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
+      } else if (isStringArray(field, classPool)) {
+        findExtraString = "getIntent().getStringArrayExtra(\"" + value + "\")";
       } else if (isBoolArray(field)) {
         findExtraString = "getIntent().getBooleanArrayExtra(\"" + value + "\")";
       } else if (isIntArray(field)) {
@@ -149,14 +143,18 @@ public class InjectExtraProcessor implements IClassTransformer {
         findExtraString = "getIntent().getDoubleArrayExtra(\"" + value + "\")";
       } else if (isShortArray(field)) {
         findExtraString = "getIntent().getShortArrayExtra(\"" + value + "\")";
-      } else if (isCharSequenceArray(field, classPool)) {
-        findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
-      } else if (isArrayList(field, classPool)) {
-        findExtraString = "getIntent().getCharSequenceArrayListExtra(\"" + value + "\")";
-      } else if (isStringArray(field, classPool)) {
-        findExtraString = "getIntent().getStringArrayExtra(\"" + value + "\")";
       } else if (isParcelableArray(field, classPool)) {
         findExtraString = "getIntent().getParcelableArrayExtra(\"" + value + "\")";
+      } else if (isSubClass(classPool, field.getType(), Parcelable.class)) {
+        findExtraString = "getIntent().getParcelableExtra(\"" + value + "\")";
+      } else if (isSubClass(classPool, field.getType(), Serializable.class)) {
+        findExtraString = "getIntent().getSerializableExtra(\"" + value + "\")";
+      } else if (field.getType().subtypeOf(CtClass.intType)) {
+        findExtraString = "getIntent().getIntExtra(\"" + value + "\", -1)";
+      } else if (isSubClass(classPool, field.getType(), Integer.class)) {
+        findExtraString = "new Integer(getIntent().getIntExtra(\"" + value + "\", -1))";
+      } else if (isArrayList(field, classPool)) {
+        findExtraString = "getIntent().getCharSequenceArrayListExtra(\"" + value + "\")";
       } else if (field.getType().subtypeOf(CtClass.booleanType)) {
         findExtraString = "getIntent().getBooleanExtra(\"" + value + "\", false)";
       } else if (isSubClass(classPool, field.getType(), Boolean.class)) {
@@ -198,8 +196,7 @@ public class InjectExtraProcessor implements IClassTransformer {
     return buffer.toString();
   }
 
-  private String checkNullable(CtField field, String fieldName)
-      throws NotFoundException {
+  private String checkNullable(CtField field, String fieldName) throws NotFoundException {
     String checkNullable = "";
     if (!field.getType().isPrimitive() && !Nullable.isNullable(field)) {
       checkNullable = "if ("
@@ -220,10 +217,10 @@ public class InjectExtraProcessor implements IClassTransformer {
         + findExtraString
         + ";\n}";
     if (!optional) {
-        findExtraString = findExtraString
-        + " else {\n  throw new RuntimeException(\"Field "
-        + fieldName
-        + " is not optional and is not present in extras.\");\n}";
+      findExtraString = findExtraString
+          + " else {\n  throw new RuntimeException(\"Field "
+          + fieldName
+          + " is not optional and is not present in extras.\");\n}";
     }
     return findExtraString;
   }
@@ -289,7 +286,6 @@ public class InjectExtraProcessor implements IClassTransformer {
         .subtypeOf(CtClass.intType);
   }
 
-  //extension point for new classes
   private boolean isValidClass(CtClass clazz) throws NotFoundException {
     return isActivity(clazz);
   }
