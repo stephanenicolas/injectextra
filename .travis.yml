@@ -28,4 +28,4 @@ notifications:
 
 #from http://blog.ansuz.nl/index.php/2014/06/01/robolectric-and-cobertura-with-gradle/
 after_success:
-    - ./gradlew clean cobertura coveralls
+    - ./gradlew clean cobertura coveralls -d
