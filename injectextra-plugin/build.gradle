@@ -79,7 +79,7 @@ dependencies {
   testCompile("commons-logging:commons-logging:$COMMONS_LOGGING_VERSION")
   testCompile("com.google.android:android-test:$ANDROID_TEST_VERSION")
   testCompile "org.easymock:easymock:$EASY_MOCK_VERSION"
-  compile 'org.apache.httpcomponents:httpmime:4.3'
+  testCompile 'org.apache.httpcomponents:httpmime:4.3'
 }
 
 modifyPom {
