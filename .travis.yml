@@ -27,5 +27,5 @@ notifications:
   email: false
 
 after_success:
-    - ./gradlew :inject-plugin:jacocoTestReport :inject-plugin:coveralls
+    - ./gradlew :inject-plugin:cobertura :inject-plugin:coveralls
 
