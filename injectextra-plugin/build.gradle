@@ -1,8 +1,3 @@
-apply plugin: 'groovy'
-apply plugin: 'java'
-apply plugin: 'nexus'
-apply plugin: 'maven'
-
 buildscript {
   repositories {
     mavenCentral()
@@ -16,6 +11,10 @@ buildscript {
   }
 }
 
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'nexus'
+apply plugin: 'maven'
 apply plugin: 'cobertura'
 apply plugin: 'com.github.kt3k.coveralls'
 
@@ -39,7 +38,8 @@ dependencies {
   compile 'com.github.stephanenicolas.afterburner:afterburner-library:1.0.1'
 
   //only needed to create a plugin
-  compile ("com.github.stephanenicolas.morpheus:morpheus-plugin:1.0.1")
+  compile ("com.github.stephanenicolas.morpheus:morpheus-plugin:1.0.4-SNAPSHOT")
+  compile ("com.github.stephanenicolas.morpheus:morpheus-commons:1.0.4-SNAPSHOT")
   compile gradleApi()
   compile localGroovy()
 

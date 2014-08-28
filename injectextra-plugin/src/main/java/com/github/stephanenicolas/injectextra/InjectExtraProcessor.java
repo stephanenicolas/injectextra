@@ -18,6 +18,8 @@ import javassist.NotFoundException;
 import javassist.build.IClassTransformer;
 import javassist.build.JavassistBuildException;
 import lombok.extern.slf4j.Slf4j;
+import static com.github.stephanenicolas.morpheus.commons.JavassistUtils.*;
+
 
 import static java.lang.String.format;
 
@@ -98,7 +100,7 @@ public class InjectExtraProcessor implements IClassTransformer {
 
   private String createInjectExtraStatements(List<CtField> extrasToInject, CtClass targetClazz)
       throws ClassNotFoundException, NotFoundException {
-    StringBuffer buffer = new StringBuffer('\n');
+    StringBuilder buffer = new StringBuilder('\n');
     for (CtField field : extrasToInject) {
       Object annotation = field.getAnnotation(InjectExtra.class);
       //must be accessed by introspection as I get a Proxy during tests.
@@ -113,7 +115,10 @@ public class InjectExtraProcessor implements IClassTransformer {
         Method method = annotionClass.getMethod("value");
         value = (String) method.invoke(annotation);
         method = annotionClass.getMethod("optional");
-        optional = (boolean) method.invoke(annotation);
+        Boolean optionalObject = (Boolean) method.invoke(annotation);
+        if (optionalObject!= null && optionalObject) {
+          optional = true;
+        }
       } catch (Exception e) {
         log.debug("How did we get there ?", e);
       }
@@ -125,11 +130,11 @@ public class InjectExtraProcessor implements IClassTransformer {
       //please note that default values when reading extras are not used.
       if (isSubClass(classPool, field.getType(), String.class)) {
         findExtraString = "getIntent().getStringExtra(\"" + value + "\")";
-      } else if (isCharSequenceArray(field, classPool)) {
-        findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
       } else if (isStringArray(field, classPool)) {
         findExtraString = "getIntent().getStringArrayExtra(\"" + value + "\")";
-      } else if (isBoolArray(field)) {
+      } else if (isCharSequenceArray(field, classPool)) {
+        findExtraString = "getIntent().getCharSequenceArrayExtra(\"" + value + "\")";
+      } else if (isBooleanArray(field)) {
         findExtraString = "getIntent().getBooleanArrayExtra(\"" + value + "\")";
       } else if (isIntArray(field)) {
         findExtraString = "getIntent().getIntArrayExtra(\"" + value + "\")";
@@ -225,78 +230,8 @@ public class InjectExtraProcessor implements IClassTransformer {
     return findExtraString;
   }
 
-  private boolean isBoolArray(CtField field) throws NotFoundException {
-    return field.getType().isArray() && field.getType()
-        .getComponentType()
-        .subtypeOf(CtClass.booleanType);
-  }
-
-  private boolean isByteArray(CtField field) throws NotFoundException {
-    return field.getType().isArray() && field.getType()
-        .getComponentType()
-        .subtypeOf(CtClass.byteType);
-  }
-
-  private boolean isCharArray(CtField field) throws NotFoundException {
-    return field.getType().isArray() && field.getType()
-        .getComponentType()
-        .subtypeOf(CtClass.charType);
-  }
-
-  private boolean isFloatArray(CtField field) throws NotFoundException {
-    return field.getType().isArray() && field.getType()
-        .getComponentType()
-        .subtypeOf(CtClass.floatType);
-  }
-
-  private boolean isDoubleArray(CtField field) throws NotFoundException {
-    return field.getType().isArray() && field.getType()
-        .getComponentType()
-        .subtypeOf(CtClass.doubleType);
-  }
-
-  private boolean isShortArray(CtField field) throws NotFoundException {
-    return field.getType().isArray() && field.getType()
-        .getComponentType()
-        .subtypeOf(CtClass.shortType);
-  }
-
-  private boolean isCharSequenceArray(CtField field, ClassPool classPool) throws NotFoundException {
-    return field.getType().isArray() && isSubClass(classPool, field.getType().getComponentType(),
-        CharSequence.class);
-  }
-
-  private boolean isArrayList(CtField field, ClassPool classPool) throws NotFoundException {
-    return isSubClass(classPool, field.getType(), ArrayList.class);
-  }
-
-  private boolean isStringArray(CtField field, ClassPool classPool) throws NotFoundException {
-    return field.getType().isArray() && isSubClass(classPool, field.getType().getComponentType(),
-        String.class);
-  }
-
-  private boolean isParcelableArray(CtField field, ClassPool classPool) throws NotFoundException {
-    return field.getType().isArray() && isSubClass(classPool, field.getType().getComponentType(),
-        Parcelable.class);
-  }
-
-  private boolean isIntArray(CtField field) throws NotFoundException {
-    return field.getType().isArray() && field.getType()
-        .getComponentType()
-        .subtypeOf(CtClass.intType);
-  }
-
   private boolean isValidClass(CtClass clazz) throws NotFoundException {
     return isActivity(clazz);
   }
 
-  private boolean isActivity(CtClass clazz) throws NotFoundException {
-    return isSubClass(clazz.getClassPool(), clazz, Activity.class);
-  }
-
-  private boolean isSubClass(ClassPool classPool, CtClass clazz, Class<?> superClass)
-      throws NotFoundException {
-    CtClass superclass = classPool.get(superClass.getName());
-    return clazz.subclassOf(superclass);
-  }
 }

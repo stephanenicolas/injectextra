@@ -70,13 +70,13 @@ public class InjectExtraProcessorInActivityTest {
     intent.putExtra(EXTRA_ID_SHORT_ARRAY, new short[] {(short)12f});
     intent.putExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY, new CharSequence[] {new StringBuffer("foo")});
     intent.putExtra(EXTRA_ID_PARCELABLE_ARRAY, new Parcelable[] {new Point()});
-    ArrayList<CharSequence> charSequenceArrayList = new ArrayList<>();
+    ArrayList<CharSequence> charSequenceArrayList = new ArrayList<CharSequence>();
     charSequenceArrayList.add(new StringBuffer("foo"));
     intent.putExtra(EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST, charSequenceArrayList);
-    ArrayList<String> stringArrayList = new ArrayList<>();
+    ArrayList<String> stringArrayList = new ArrayList<String>();
     stringArrayList.add(new String("foo"));
     intent.putExtra(EXTRA_ID_STRING_ARRAY_LIST, stringArrayList);
-    ArrayList<Parcelable> pointArrayList = new ArrayList<>();
+    ArrayList<Parcelable> pointArrayList = new ArrayList<Parcelable>();
     pointArrayList.add(new Point());
     intent.putExtra(EXTRA_ID_PARCELABLE_ARRAY_LIST, pointArrayList);
 
