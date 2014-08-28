@@ -9,7 +9,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:0.12.2'
     classpath 'com.github.stephanenicolas.morpheus:morpheus-plugin:1.0.0'
-    classpath("com.github.stephanenicolas.injectextra:injectextra-plugin:1.0.4-SNAPSHOT")
+    classpath("com.github.stephanenicolas.injectextra:injectextra-plugin:1.0.5-SNAPSHOT")
     //for tests
     classpath 'com.github.jcandksolutions.gradle:android-unit-test:1.3.0'
   }
