@@ -1,3 +1,8 @@
+version 1.0.4 (August 28th 2014)
+-------------
+
+Refactored using morpheus commons.
+
 version 1.0.3 (August 27th 2014)
 -------------
 
