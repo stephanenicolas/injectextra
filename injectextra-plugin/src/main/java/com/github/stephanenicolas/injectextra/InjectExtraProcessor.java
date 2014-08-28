@@ -1,10 +1,10 @@
 package com.github.stephanenicolas.injectextra;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import com.github.stephanenicolas.afterburner.AfterBurner;
 import com.github.stephanenicolas.afterburner.exception.AfterBurnerImpossibleException;
+import com.github.stephanenicolas.morpheus.commons.NullableUtils;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -203,7 +203,7 @@ public class InjectExtraProcessor implements IClassTransformer {
 
   private String checkNullable(CtField field, String fieldName) throws NotFoundException {
     String checkNullable = "";
-    if (!field.getType().isPrimitive() && !Nullable.isNullable(field)) {
+    if (!field.getType().isPrimitive() && !NullableUtils.isNullable(field)) {
       checkNullable = "if ("
           + fieldName
           + " == null) {\n  throw new RuntimeException(\"Field "
