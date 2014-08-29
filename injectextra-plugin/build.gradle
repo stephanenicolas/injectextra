@@ -28,6 +28,9 @@ repositories {
   maven {
     url 'maven_3rd_party'
   }
+
+  //to get snapshots
+  maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 dependencies {
