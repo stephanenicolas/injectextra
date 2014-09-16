@@ -189,9 +189,7 @@ public class InjectExtraProcessor implements IClassTransformer {
       } else if (isSubClass(classPool, field.getType(), CharSequence.class)) {
         findExtraString = "getIntent().getCharSequenceExtra(\"" + value + "\")";
       } else {
-        throw new NotFoundException(
-            format("InjectExtra doesn't know how to inject field %s of type %s in %s",
-                field.getName(), field.getType().getName(), targetClazz.getName()));
+        findExtraString = "(" +field.getType().getName()+ ")" + "getIntent().getExtras().get(\"" + value + "\")";
       }
       buffer.append(checkOptional(assignment, value, optional, findExtraString, fieldName));
       buffer.append("\n");

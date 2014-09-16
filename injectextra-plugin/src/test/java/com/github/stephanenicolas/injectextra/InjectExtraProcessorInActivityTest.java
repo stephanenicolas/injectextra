@@ -44,6 +44,7 @@ public class InjectExtraProcessorInActivityTest {
   public static final String EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST = "EXTRA_ID_CHAR_SEQUENCE_ARRAY_LIST";
   public static final String EXTRA_ID_STRING_ARRAY_LIST = "EXTRA_ID_STRING_ARRAY_LIST";
   public static final String EXTRA_ID_PARCELABLE_ARRAY_LIST = "EXTRA_ID_PARCELABLE_ARRAY_LIST";
+  public static final String EXTRA_ID_OBJECT = "EXTRA_ID_OBJECT";
 
   @Test
   public void shouldInjectExtra_simple() {
@@ -79,6 +80,7 @@ public class InjectExtraProcessorInActivityTest {
     ArrayList<Parcelable> pointArrayList = new ArrayList<Parcelable>();
     pointArrayList.add(new Point());
     intent.putExtra(EXTRA_ID_PARCELABLE_ARRAY_LIST, pointArrayList);
+    intent.putExtra(EXTRA_ID_OBJECT, new Intent());
 
     System.out.println("Extras used for tests " + intent.getExtras().toString());
     TestActivity activity =
@@ -120,6 +122,9 @@ public class InjectExtraProcessorInActivityTest {
     assertThat(activity.listStrings, is(intent.getStringArrayListExtra(EXTRA_ID_STRING_ARRAY_LIST)));
     assertThat(activity.listParcelables, is(intent.getParcelableArrayListExtra(
         EXTRA_ID_PARCELABLE_ARRAY_LIST)));
+    assertThat(activity.listParcelables, is(intent.getParcelableArrayListExtra(
+        EXTRA_ID_PARCELABLE_ARRAY_LIST)));
+    assertThat(activity.intent, is(intent.getExtras().get(EXTRA_ID_OBJECT)));
   }
 
   @Test(expected = RuntimeException.class)
@@ -220,6 +225,8 @@ public class InjectExtraProcessorInActivityTest {
     protected ArrayList<String> listStrings;
     @InjectExtra(EXTRA_ID_PARCELABLE_ARRAY_LIST)
     protected ArrayList<Parcelable> listParcelables;
+    @InjectExtra(EXTRA_ID_OBJECT)
+    protected Intent intent;
   }
 
   public static class TestActivityOptional extends Activity {
